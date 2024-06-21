@@ -13,7 +13,7 @@ var x = document.getElementById('login');
         }
    // View Password codes
          
-      
+
         function myLogPassword(){
          var a = document.getElementById("logPassword");
          var b = document.getElementById("eye");

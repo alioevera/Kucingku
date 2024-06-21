@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
-    <title>Responsive Dashboard Design #2 | AsmrProg</title>
+    <title>Kucingku </title>
 
     <!-- Tambahkan Google Places API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"></script>
@@ -24,7 +24,7 @@
                 <a href="#"><i class='bx bx-analyse'></i><span>Place</span></a>
                 <ul class="submenu">
                     <li><a href="addPlace.html">Add Place</a></li>
-                    <li><a href="viewPlace.html">Submenu Item 2</a></li>
+                    <li><a href="viewPlace.html">View Place</a></li>
                 </ul>
             </li>
             <li><a href="#"><i class='bx bx-message-square-dots'></i><span>Review</span></a></li>
@@ -77,78 +77,56 @@
                 </div>
             </div>
 
-            <!-- Cards -->
-            <div class="cards">
-                <div class="card">
-                    <div class="head">
-                        <h2>Card Title</h2>
-                        <div class="icon success">
-                            <i class='bx bx-check-circle'></i>
-                        </div>
-                    </div>
-                    <div class="number">1234</div>
-                    <div class="progress">
-                        <div class="value">80%</div>
-                        <div class="bar"><span style="width: 80%;"></span></div>
-                    </div>
-                </div>
-                <!-- More cards can be added here -->
-            </div>
-
-            <!-- Form Section -->
-            <div class="form-section">
-                <div class="form-container">
-                    <h3>Add Place</h3>
-                    <form id="createForm">
-                        <label for="namaTempat">Place Code:</label>
-                        <input type="text" id="idPlace" name="namaTempat" required><br><br>
-                        <label for="namaTempat">Place Name:</label>
-                        <input type="text" id="plName" name="namaTempat" required><br><br>
-                        <label for="jalan">Address:</label>
-                        <input type="text" id="plAddress" name="jalan" required><br><br>
-                        <label for="namaOwner">Place Owner:</label>
-                        <input type="text" id="plOwner" name="namaOwner" required><br><br>
-                        <label for="rating">Rating:</label>
-                        <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
-                        <button id="addBtn" type="button">Add</button>
-                        <button id="upBtn" type="button">Update</button>
-                        <button id="reBtn" type="button">Remove</button>
-                    </form>
-                </div>
-            </div>
-
             <!-- Data Section -->
-            <div class="data">
-                <div class="content-data">
-                    <div class="head">
-                        <h3>Data Title</h3>
-                        <div class="icon">
-                            <i class='bx bx-data'></i>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="list-item">
-                            <span>Item 1</span>
-                            <span class="status success">Completed</span>
-                        </div>
-                        <!-- More list items can be added here -->
-                    </div>
-                </div>
-                <!-- More data sections can be added here -->
+<div class="data">
+    <div class="content-data">
+        <div class="head">
+            <h3>Place Data</h3>
+            <div class="icon">
+                <i class='bx bx-data'></i>
             </div>
+        </div>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Place Code</th>
+                        <th>Place Name</th>
+                        <th>Address</th>
+                        <th>Place Owner</th>
+                        <th>Rating</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data rows will go here -->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button id="upBtn" class="action-btn edit">Edit</button>
+                            <button id="reBtn" class="action-btn delete">Delete</button>
+                        </td>
+                    </tr>
+                    <!-- More rows as needed -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
         </main>
     </div>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+
     
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getDatabase, ref, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -173,25 +151,66 @@
         const plOwner = document.getElementById('plOwner');
         const rating = document.getElementById('rating');
 
-        const addBtn = document.getElementById('addBtn');
-        const upBtn = document.getElementById('upBtn');
-        const reBtn = document.getElementById('reBtn');
+        const upBtn = document.querySelector('.edit');
+    const reBtn = document.querySelector('.delete');
 
-        function addData () {
-            set(ref(db,'PlacesSet/' + idPlace.value), {
+        function loadData() {
+        const placesRef = ref(db, 'PlacesSet/');
+        onValue(placesRef, (snapshot) => {
+        const data = snapshot.val();
+        const tbody = document.querySelector('.data-table tbody');
+        tbody.innerHTML = ''; // Clear existing rows
+
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                const place = data[key];
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${key}</td>
+                    <td>${place.plName}</td>
+                    <td>${place.plAddress}</td>
+                    <td>${place.plOwner}</td>
+                    <td>${place.rating}</td>
+                    <td>
+                        <button class="action-btn edit" onclick="editData('${key}')">Edit</button>
+                        <button class="action-btn delete" onclick="deleteData('${key}')">Delete</button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            }
+        }
+    });
+}
+
+function UpdateData() {
+            update(ref(db, 'PlacesSet/' + idPlace.value), {
                 plName: plName.value,
                 plAddress: plAddress.value,
                 plOwner: plOwner.value,
                 rating: rating.value
             }).then(() => {
-                alert("Data Added Successfully");
+                alert("Data Updated Successfully");
             }).catch((error) => {
                 alert("Unsuccessfully");
                 console.log(error);
-            });
+            })
         }
-        
-        addBtn.addEventListener('click', addData);
+
+        function DeleteData() {
+            remove(ref(db, 'PlacesSet/' + idPlace.value))
+            .then(() => {
+                alert("Data Deleted Successfully");
+            }).catch((error) => {
+                alert("Unsuccessfully");
+                console.log(error);
+            })
+        }
+
+window.onload = loadData;
+upBtn.addEventListener('click', UpdateData);
+reBtn.addEventListener('click', DeleteData)
     </script>
 </body>
 
