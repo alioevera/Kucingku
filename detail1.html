@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Rumah Kucing 1</title>
+    <link rel="stylesheet" href="dist/css/style.css" />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #f8f8f8;
+        color: #333;
+      }
+
+      main {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
+      main img {
+        width: 60%;
+        border-radius: 8px;
+        display: block;
+        margin: 0 auto;
+      }
+
+      main h2 {
+        margin-top: 0;
+        font-size: 24px;
+        color: #4caf50;
+      }
+
+      main p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #666;
+        margin-bottom: 10px;
+      }
+
+      #map {
+        width: 100%;
+        height: 400px;
+        margin-top: 20px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+      }
+
+      .navigation-buttons button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #ff6701;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 50px;
+      }
+
+      .navigation-buttons button:hover {
+        background-color: #45a049;
+      }
+
+      footer {
+        background-color: #4caf50;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+      }
+    </style>
+    <!-- Load the Google Maps API -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVNBuRxOKj44ZgyQGkwTMVTlpfEztbLvc&callback=initMap"
+      async
+      defer
+    ></script>
+    <script>
+      function initMap() {
+        try {
+          // The location of Rumah Kucing 1
+          const location = { lat: -6.304917503345618, lng: 106.7214212439519 };
+          // The map, centered at Rumah Kucing 1
+          const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 15,
+            center: location,
+          });
+          // The marker, positioned at Rumah Kucing 1
+          const marker = new google.maps.Marker({
+            position: location,
+            map: map,
+          });
+        } catch (error) {
+          console.error("Error initializing Google Map:", error);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main>
+      <img src="assets/img/RK_B.jpg" alt="Rumah Kucing 1" />
+      <h2>Lokasi Rumah Kucing 1</h2>
+      <p>
+        Grand Bintaro Garden Residence Blok F3, Jl. Merpati Raya No.27, Sawah
+        Baru, Kec, Kec. Ciputat, Kota Tangerang Selatan, Banten 15413
+      </p>
+      <div id="map"></div>
+      <div class="navigation-buttons">
+        <button onclick="window.location.href='index.html'">Back</button>
+        <button onclick="window.location.href='detail2.html'">Next</button>
+      </div>
+    </main>
+    <footer>
+      <p>&copy; 2024 KucingKu. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
