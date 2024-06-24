@@ -18,25 +18,32 @@
         <form class="update-form" id="updateForm">
             <div class="form-group">
                 <label for="placeCode">Place Code</label>
-                <input type="text" id="idPlace" name="placeCode" required>
+                <input type="text" id="idPlace" name="placeCode">
             </div>
             <div class="form-group">
                 <label for="placeName">Place Name</label>
-                <input type="text" id="plName" name="placeName" required>
+                <input type="text" id="plName" name="placeName">
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
-                <input type="text" id="plAddress" name="address" required>
+                <input type="text" id="plAddress" name="address">
             </div>
             <div class="form-group">
                 <label for="placeOwner">Place Owner</label>
-                <input type="text" id="plOwner" name="placeOwner" required>
+                <input type="text" id="plOwner" name="placeOwner">
             </div>
             <div class="form-group">
                 <label for="rating">Rating</label>
-                <input type="number" id="rating" name="rating" min="1" max="5" required>
+                <input type="number" id="rating" name="rating" min="1" max="5">
             </div>
-            <button type="submit">Update Place</button>
+            <!-- Form untuk upload gambar -->
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" accept="image/*">
+                <img id="currentImage" src="" alt="Current Image">
+                <progress id="uploadProgress" value="0" max="100"></progress>
+            </div>
+            <button id="updateButton" type="submit">Update Place</button>
         </form>
     </div>
 
@@ -45,10 +52,11 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { getStorage, ref as Sref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+            apiKey: "YOUR_API_KEY",
             authDomain: "project-kucing.firebaseapp.com",
             databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
             projectId: "project-kucing",
@@ -62,6 +70,7 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getDatabase();
+        const storage = getStorage(app);
 
         // Get placeId from URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -74,18 +83,28 @@
         const plAddress = document.getElementById('plAddress');
         const plOwner = document.getElementById('plOwner');
         const rating = document.getElementById('rating');
+        const imageInput = document.getElementById('image');
+        const currentImage = document.getElementById('currentImage');
+        const uploadProgress = document.getElementById('uploadProgress');
 
         // Load place data
         function loadPlaceData() {
+            console.log('Loading place data for placeId:', placeId);
             const placeRef = ref(db, 'PlacesSet/' + placeId);
             get(placeRef).then((snapshot) => {
                 if (snapshot.exists()) {
                     const placeData = snapshot.val();
+                    console.log('Place data:', placeData);
                     idPlace.value = placeId;
                     plName.value = placeData.plName;
                     plAddress.value = placeData.plAddress;
                     plOwner.value = placeData.plOwner;
                     rating.value = placeData.rating;
+
+                    // Display current image if available
+                    if (placeData.plImage) {
+                        currentImage.src = placeData.plImage;
+                    }
                 } else {
                     console.error("No data available for placeId:", placeId);
                 }
@@ -113,8 +132,81 @@
                 })
                 .catch((error) => {
                     console.error("Error updating place data:", error);
+                    alert("Error updating place data. Please try again later.");
                 });
         });
+
+        // Function to handle file selection and upload
+        imageInput.addEventListener('change', () => {
+            handleImageUpload();
+        });
+
+        function handleImageUpload() {
+            const file = imageInput.files[0];
+            if (!file) return;
+
+            const fileName = file.name;
+            const storageRef = Sref(storage, `Images/${fileName}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    uploadProgress.value = progress;
+                },
+                (error) => {
+                    console.error("Error uploading image:", error);
+                    alert("Error uploading image. Please try again later.");
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref)
+                        .then((downloadURL) => {
+                            // Update currentImage src to display uploaded image
+                            currentImage.src = downloadURL;
+
+                            // Save image URL to Realtime Database
+                            saveImageUrlToDatabase(downloadURL);
+                        })
+                        .catch((error) => {
+                            console.error("Error retrieving download URL:", error);
+                            alert("Error retrieving download URL. Please try again later.");
+                        });
+                }
+            );
+        }
+
+        // Function to save image URL to Realtime Database
+        function saveImageUrlToDatabase(imageUrl) {
+            const placeRef = ref(db, 'PlacesSet/' + placeId);
+            update(placeRef, {
+                    plImage: imageUrl
+                })
+                .then(() => {
+                    alert('Image updated successfully');
+                })
+                .catch((error) => {
+                    console.error("Error updating image URL in database:", error);
+                    alert("Error updating image. Please try again later.");
+                });
+        }
+
+        // Function to get status text based on rating
+        function getStatusText(rating) {
+            switch (rating) {
+                case 5:
+                    return 'Excellent';
+                case 4:
+                    return 'Good';
+                case 3:
+                    return 'Standard';
+                case 2:
+                    return 'Bad';
+                case 1:
+                    return 'Terrible';
+                default:
+                    return 'No Rating';
+            }
+        }
 
         // Load the place data when the page loads
         window.onload = loadPlaceData;
