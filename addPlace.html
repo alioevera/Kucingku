@@ -7,8 +7,6 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
     <title>Responsive Dashboard Design #2 | AsmrProg</title>
-
-    <!-- Tambahkan Google Places API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"></script>
 </head>
 
@@ -24,7 +22,8 @@
                 <a href="#"><i class='bx bx-analyse'></i><span>Place</span></a>
                 <ul class="submenu">
                     <li><a href="addPlace.html">Add Place</a></li>
-                    <li><a href="viewPlace.html">Submenu Item 2</a></li>
+                    <li><a href="viewPlace.html">View Place</a></li>
+                    <li><a href="updatePlace.html">Update Place</a></li>
                 </ul>
             </li>
             <li><a href="#"><i class='bx bx-message-square-dots'></i><span>Review</span></a></li>
@@ -42,7 +41,6 @@
 
     <!-- Content -->
     <div class="content">
-        <!-- Navbar -->
         <nav>
             <i class='bx bx-menu'></i>
             <form action="#">
@@ -62,7 +60,6 @@
             </a>
         </nav>
 
-        <!-- Main Content -->
         <main>
             <div class="header">
                 <div class="left">
@@ -77,7 +74,6 @@
                 </div>
             </div>
 
-            <!-- Cards -->
             <div class="cards">
                 <div class="card">
                     <div class="head">
@@ -92,16 +88,20 @@
                         <div class="bar"><span style="width: 80%;"></span></div>
                     </div>
                 </div>
-                <!-- More cards can be added here -->
             </div>
 
-            <!-- Form Section -->
             <div class="form-section">
                 <div class="form-container">
                     <h3>Add Place</h3>
                     <form id="createForm">
                         <label for="namaTempat">Place Code:</label>
                         <input type="text" id="idPlace" name="namaTempat" required><br><br>
+                        <label for="image">Image:</label>
+                        <input type="text" id="namebox"><br><br>
+                        <label id="extlab"></label>
+                        <br><br>
+                        <img id="myimg"><label id="upprogress"></label>
+                        <br><br>
                         <label for="namaTempat">Place Name:</label>
                         <input type="text" id="plName" name="namaTempat" required><br><br>
                         <label for="jalan">Address:</label>
@@ -111,14 +111,13 @@
                         <label for="rating">Rating:</label>
                         <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
                         <button id="addBtn" type="button">Add</button>
-                        <button id="retBtn" type="button">Retrieve</button>
-                        <button id="upBtn" type="button">Update</button>
-                        <button id="reBtn" type="button">Remove</button>
+                        <button id="selbtn" type="button">Select Image</button>
+                        <button id="upbtn" type="button">Upload Image</button>
+                        <button id="downbtn" type="button">Retrieve Image</button>
                     </form>
                 </div>
             </div>
 
-            <!-- Data Section -->
             <div class="data">
                 <div class="content-data">
                     <div class="head">
@@ -132,26 +131,23 @@
                             <span>Item 1</span>
                             <span class="status success">Completed</span>
                         </div>
-                        <!-- More list items can be added here -->
                     </div>
                 </div>
-                <!-- More data sections can be added here -->
             </div>
         </main>
     </div>
     
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
     
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getStorage, ref as Sref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
           apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
           authDomain: "project-kucing.firebaseapp.com",
@@ -163,10 +159,10 @@
           measurementId: "G-CTMSWG4E5W"
         };
       
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getDatabase();
+        const storage = getStorage(app);
 
         const idPlace = document.getElementById('idPlace');
         const plName = document.getElementById('plName');
@@ -175,12 +171,12 @@
         const rating = document.getElementById('rating');
 
         const addBtn = document.getElementById('addBtn');
-        const retBtn = document.getElementById('retBtn');
-        const upBtn = document.getElementById('upBtn');
-        const reBtn = document.getElementById('reBtn');
+        const selBtn = document.getElementById('selbtn');
+        const upBtn = document.getElementById('upbtn');
+        const downBtn = document.getElementById('downbtn');
 
-        function addData () {
-            set(ref(db,'PlacesSet/' + idPlace.value), {
+        function addData() {
+            set(ref(db, 'PlacesSet/' + idPlace.value), {
                 plName: plName.value,
                 plAddress: plAddress.value,
                 plOwner: plOwner.value,
@@ -197,6 +193,7 @@
             const dbRef = ref(db);
             get(child(dbRef, 'PlacesSet/' + idPlace.value)).then((snapshot) => {
                 if (snapshot.exists()) {
+                    myimg.value = snapshot.val
                     plName.value = snapshot.val().plName;
                     plAddress.value = snapshot.val().plAddress;
                     plOwner.value = snapshot.val().plOwner;
@@ -209,7 +206,126 @@
                 console.log(error);
             });
         }
+
         addBtn.addEventListener('click', addData);  
+
+        let files = [];
+        const reader = new FileReader();
+
+        const namebox = document.getElementById('namebox');
+        const extlab = document.getElementById('extlab');
+        const myimg = document.getElementById('myimg');
+        const proglab = document.getElementById('upprogress');
+
+        const input = document.createElement('input');
+        input.type = 'file';
+
+        input.onchange = e => {
+            files = e.target.files;
+            const extension = GetFileExt(files[0]);
+            const name = GetFileName(files[0]);
+            namebox.value = name;
+            extlab.innerHTML = extension;
+            reader.readAsDataURL(files[0]);
+        }
+
+        reader.onload = function() {
+            myimg.src = reader.result;
+        }
+
+        selBtn.onclick = function() {
+            input.click();
+        }
+
+        function GetFileExt(file) {
+            const temp = file.name.split('.');
+            const ext = temp.slice((temp.length-1), (temp.length));
+            return '.' + ext[0];
+        }
+
+        function GetFileName(file) {
+            const temp = file.name.split('.');
+            const fname = temp.slice(0, -1).join('.');
+            return fname;
+        }
+
+        async function UploadProcess() {
+            const ImgToUpload = files[0];
+            const ImgName = namebox.value + extlab.innerHTML;
+
+            if (!ValidateName()) {
+                alert('Name cannot contain ".", "#", "$", "[", or "]"');
+                return;
+            }
+
+            const metaData = {
+                contentType: ImgToUpload.type
+            }
+
+            const storageRef = Sref(storage, "Images/" + ImgName);
+            const UploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaData);
+
+            UploadTask.on('state_changed', 
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    proglab.innerHTML = "Upload " + progress.toFixed(2) + "%";
+                }, 
+                (error) => {
+                    alert("Error: Image not uploaded!");
+                    console.error(error);
+                }, 
+                () => {
+                    getDownloadURL(UploadTask.snapshot.ref)
+                    .then((downloadURL) => {
+                        console.log(downloadURL);
+                        SaveURLtoRealTimDB(downloadURL);
+                    })
+                    .catch((error) => {
+                        alert("Error: Failed to retrieve download URL!");
+                        console.error(error);
+                    });
+                }
+            );
+        }
+
+        const realdb = getDatabase();
+
+        function SaveURLtoRealTimDB(URL) {
+            const name = namebox.value;
+            const ext = extlab.innerHTML;
+
+            set(ref(realdb, "ImagesLinks/" + name), {
+                ImageName: (name + ext),
+                ImgUrl: URL
+            }).then(() => {
+                console.log("Image URL saved to Realtime DB");
+            }).catch((error) => {
+                alert("Error: Failed to save image URL to Realtime DB!");
+                console.error(error);
+            });
+        }
+
+        function GetUrlfromRealtimDB() {
+            const name = namebox.value;
+            const dbRef = ref(realdb);
+
+            get(child(dbRef, "ImagesLinks/" + name)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    myimg.src = snapshot.val().ImgUrl;
+                }
+            }).catch((error) => {
+                alert("Error: Failed to retrieve image URL from Realtime DB!");
+                console.error(error);
+            });
+        }
+
+        function ValidateName() {
+            const regex = /[\.#$\[\]]/
+            return !(regex.test(namebox.value));
+        }
+
+        upBtn.onclick = UploadProcess;
+        downBtn.onclick = GetUrlfromRealtimDB;
     </script>
 </body>
 

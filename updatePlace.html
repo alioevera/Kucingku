@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Kucingku</title>
+
+    <!-- Tambahkan Google Places API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Update Place</h1>
+        <form class="update-form" id="updateForm">
+            <div class="form-group">
+                <label for="placeCode">Place Code</label>
+                <input type="text" id="idPlace" name="placeCode" required>
+            </div>
+            <div class="form-group">
+                <label for="placeName">Place Name</label>
+                <input type="text" id="plName" name="placeName" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="plAddress" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="placeOwner">Place Owner</label>
+                <input type="text" id="plOwner" name="placeOwner" required>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" required>
+            </div>
+            <button type="submit">Update Place</button>
+        </form>
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+            authDomain: "project-kucing.firebaseapp.com",
+            databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
+            projectId: "project-kucing",
+            storageBucket: "project-kucing.appspot.com",
+            messagingSenderId: "670406034488",
+            appId: "1:670406034488:web:e5e24491d859491abb12cd",
+            measurementId: "G-CTMSWG4E5W"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase();
+
+        // Get placeId from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const placeId = urlParams.get('placeId');
+
+        // Get form elements
+        const form = document.getElementById('updateForm');
+        const idPlace = document.getElementById('idPlace');
+        const plName = document.getElementById('plName');
+        const plAddress = document.getElementById('plAddress');
+        const plOwner = document.getElementById('plOwner');
+        const rating = document.getElementById('rating');
+
+        // Load place data
+        function loadPlaceData() {
+            const placeRef = ref(db, 'PlacesSet/' + placeId);
+            get(placeRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const placeData = snapshot.val();
+                    idPlace.value = placeId;
+                    plName.value = placeData.plName;
+                    plAddress.value = placeData.plAddress;
+                    plOwner.value = placeData.plOwner;
+                    rating.value = placeData.rating;
+                } else {
+                    console.error("No data available for placeId:", placeId);
+                }
+            }).catch((error) => {
+                console.error("Error fetching place data:", error);
+            });
+        }
+
+        // Update place data
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const updatedPlaceData = {
+                plName: plName.value,
+                plAddress: plAddress.value,
+                plOwner: plOwner.value,
+                rating: parseInt(rating.value)
+            };
+
+            const placeRef = ref(db, 'PlacesSet/' + placeId);
+            update(placeRef, updatedPlaceData)
+                .then(() => {
+                    alert('Place updated successfully');
+                    window.location.href = `viewPlace.html?placeId=${placeId}`;
+                })
+                .catch((error) => {
+                    console.error("Error updating place data:", error);
+                });
+        });
+
+        // Load the place data when the page loads
+        window.onload = loadPlaceData;
+    </script>
+</body>
+
+</html>

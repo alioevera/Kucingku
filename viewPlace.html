@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
-    <title>Kucingku </title>
+    <title>Kucingku</title>
 
     <!-- Tambahkan Google Places API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"></script>
@@ -78,50 +78,38 @@
             </div>
 
             <!-- Data Section -->
-<div class="data">
-    <div class="content-data">
-        <div class="head">
-            <h3>Place Data</h3>
-            <div class="icon">
-                <i class='bx bx-data'></i>
+            <div class="data">
+                <div class="content-data">
+                    <div class="head">
+                        <h3>Place Data</h3>
+                        <div class="icon">
+                            <i class='bx bx-data'></i>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Place Code</th>
+                                    <th>Place Image</th>
+                                    <th>Place Name</th>
+                                    <th>Address</th>
+                                    <th>Place Owner</th>
+                                    <th>Rating</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data rows will go here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="table-container">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Place Code</th>
-                        <th>Place Name</th>
-                        <th>Address</th>
-                        <th>Place Owner</th>
-                        <th>Rating</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Data rows will go here -->
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <button id="upBtn" class="action-btn edit">Edit</button>
-                            <button id="reBtn" class="action-btn delete">Delete</button>
-                        </td>
-                    </tr>
-                    <!-- More rows as needed -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
         </main>
     </div>
 
-    
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -130,88 +118,93 @@
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
-          authDomain: "project-kucing.firebaseapp.com",
-          databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
-          projectId: "project-kucing",
-          storageBucket: "project-kucing.appspot.com",
-          messagingSenderId: "670406034488",
-          appId: "1:670406034488:web:e5e24491d859491abb12cd",
-          measurementId: "G-CTMSWG4E5W"
+            apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+            authDomain: "project-kucing.firebaseapp.com",
+            databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
+            projectId: "project-kucing",
+            storageBucket: "project-kucing.appspot.com",
+            messagingSenderId: "670406034488",
+            appId: "1:670406034488:web:e5e24491d859491abb12cd",
+            measurementId: "G-CTMSWG4E5W"
         };
-      
+
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getDatabase();
 
-        const idPlace = document.getElementById('idPlace');
-        const plName = document.getElementById('plName');
-        const plAddress = document.getElementById('plAddress');
-        const plOwner = document.getElementById('plOwner');
-        const rating = document.getElementById('rating');
-
-        const upBtn = document.querySelector('.edit');
-    const reBtn = document.querySelector('.delete');
-
-        function loadData() {
-        const placesRef = ref(db, 'PlacesSet/');
-        onValue(placesRef, (snapshot) => {
-        const data = snapshot.val();
-        const tbody = document.querySelector('.data-table tbody');
-        tbody.innerHTML = ''; // Clear existing rows
-
-        for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-                const place = data[key];
-                const row = document.createElement('tr');
-                
-                row.innerHTML = `
-                    <td>${key}</td>
-                    <td>${place.plName}</td>
-                    <td>${place.plAddress}</td>
-                    <td>${place.plOwner}</td>
-                    <td>${place.rating}</td>
-                    <td>
-                        <button class="action-btn edit" onclick="editData('${key}')">Edit</button>
-                        <button class="action-btn delete" onclick="deleteData('${key}')">Delete</button>
-                    </td>
-                `;
-                
-                tbody.appendChild(row);
+        function getStatusText(rating) {
+            switch (rating) {
+                case 5:
+                    return 'Excellent';
+                case 4:
+                    return 'Good';
+                case 3:
+                    return 'Standard';
+                case 2:
+                    return 'Bad';
+                case 1:
+                    return 'Terrible';
+                default:
+                    return 'No Rating';
             }
         }
-    });
-}
 
-function UpdateData() {
-            update(ref(db, 'PlacesSet/' + idPlace.value), {
-                plName: plName.value,
-                plAddress: plAddress.value,
-                plOwner: plOwner.value,
-                rating: rating.value
-            }).then(() => {
-                alert("Data Updated Successfully");
-            }).catch((error) => {
-                alert("Unsuccessfully");
-                console.log(error);
-            })
+        // Ensure that the redirectToUpdate function is globally accessible
+        window.redirectToUpdate = function (idPlace) {
+            console.log('Redirecting to update page for placeId:', idPlace);
+            window.location.href = `updatePlace.html?placeId=${idPlace}`;
+        };
+
+        // Ensure that the deleteData function is globally accessible
+        window.deleteData = function (idPlace) {
+            console.log('Attempting to delete place with id:', idPlace);
+            remove(ref(db, 'PlacesSet/' + idPlace))
+                .then(() => {
+                    alert("Data Deleted Successfully");
+                    console.log("Delete successful");
+                    loadData(); // Refresh the data after deletion
+                }).catch((error) => {
+                    alert("Unsuccessful");
+                    console.error("Delete failed:", error);
+                });
+        };
+
+        function loadData() {
+            const placesRef = ref(db, 'PlacesSet/');
+            onValue(placesRef, (snapshot) => {
+                const data = snapshot.val();
+                const tbody = document.querySelector('.data-table tbody');
+                tbody.innerHTML = ''; // Clear existing rows
+
+                for (const key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        const place = data[key];
+                        const row = document.createElement('tr');
+
+                        row.innerHTML = `
+                        <td>${key}</td>
+                        <td><img src="${place.myimg}" alt="Place Image" style="width: 100px; height: auto;"></td>
+                        <td>${place.plName}</td>
+                        <td>${place.plAddress}</td>
+                        <td>${place.plOwner}</td>
+                        <td>${place.rating}</td>
+                        <td>${getStatusText(place.rating)}</td>
+                        <td>
+                            <button class="action-btn edit" onclick="redirectToUpdate('${key}')">Edit</button>
+                            <button class="action-btn delete" onclick="deleteData('${key}')">Delete</button>
+                        </td>
+                    `;
+
+                        tbody.appendChild(row);
+                    }
+                }
+            });
         }
 
-        function DeleteData() {
-            remove(ref(db, 'PlacesSet/' + idPlace.value))
-            .then(() => {
-                alert("Data Deleted Successfully");
-            }).catch((error) => {
-                alert("Unsuccessfully");
-                console.log(error);
-            })
-        }
-
-window.onload = loadData;
-upBtn.addEventListener('click', UpdateData);
-reBtn.addEventListener('click', DeleteData)
+        window.onload = loadData;
     </script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
