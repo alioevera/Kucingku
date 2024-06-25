@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Kucingku</title>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="#" class="logo">
+            <img src="images/logo.png" alt="Logo">
+        </a>
+        <ul class="side-menu">
+            <li><a href="#"><i class='bx bxs-dashboard'></i><span>Dashboard</span></a></li>
+            <li class="active">
+                <a href="#"><i class='bx bx-analyse'></i><span>Place</span></a>
+                <ul class="submenu">
+                    <li><a href="addPlace.html">Add Place</a></li>
+                    <li><a href="viewPlace.html">View Place</a></li>
+                    <li><a href="updatePlace.html">Update Place</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class='bx bx-message-square-dots'></i><span>Review</span></a></li>
+            <li><a href="#"><i class='bx bx-group'></i><span>Users</span></a></li>
+            <li><a href="#"><i class='bx bx-cog'></i><span>Settings</span></a></li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bx-log-out-circle'></i><span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+            <a href="#" class="notif">
+                <i class='bx bx-bell'></i>
+                <span class="count">12</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="images/logo.png" alt="Profile">
+            </a>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Dashboard</h1>
+                    <ul class="breadcrumbs">
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="right">
+                    <button>Button</button>
+                </div>
+            </div>
+
+            <!-- Cards -->
+            <div class="cards">
+                <div class="card">
+                    <div class="head">
+                        <h2>Card Title</h2>
+                        <div class="icon success">
+                            <i class='bx bx-check-circle'></i>
+                        </div>
+                    </div>
+                    <div class="number">1234</div>
+                    <div class="progress">
+                        <div class="value">80%</div>
+                        <div class="bar"><span style="width: 80%;"></span></div>
+                    </div>
+                </div>
+                <!-- More cards can be added here -->
+            </div>
+
+            <!-- Data Section -->
+            <div class="data">
+                <div class="content-data">
+                    <div class="head">
+                        <h3>Data Title</h3>
+                        <div class="icon">
+                            <i class='bx bx-data'></i>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <div class="list-item">
+                            <span>Item 1</span>
+                            <span class="status success">Completed</span>
+                        </div>
+                        <!-- More list items can be added here -->
+                    </div>
+                </div>
+                <!-- More data sections can be added here -->
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDRfdDMQLeemz74kgulPMKqsD7PQMI1qMU",
+          authDomain: "kucingku-b4d35.firebaseapp.com",
+          projectId: "kucingku-b4d35",
+          storageBucket: "kucingku-b4d35.appspot.com",
+          messagingSenderId: "557948775204",
+          appId: "1:557948775204:web:4515b9bc99215b305be1b1",
+          measurementId: "G-0WRRMLSLND"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
+</body>
+
+</html>
