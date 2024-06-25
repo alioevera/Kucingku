@@ -629,7 +629,93 @@
         .action-btn.delete:hover {
             background: var(--light-danger);
             color: var(--danger);
-        }        
+        }
+        
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: var(--light);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        #createForm label {
+            font-size: 18px;
+            color: var(--dark);
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        #createForm input[type="text"],
+        #createForm input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            border: 1px solid var(--grey);
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        #createForm input[type="text"]:focus,
+        #createForm input[type="number"]:focus {
+            border-color: var(--primary);
+        }
+        
+        #createForm button {
+            padding: 12px 24px;
+            margin-top: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--primary);
+            color: var(--light);
+            transition: background-color 0.3s ease;
+        }
+        
+        #createForm button:hover {
+            background-color: var(--light-primary);
+            color: var(--primary);
+        }
+        
+        #selbtn, #upbtn, #downbtn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--primary);
+            color: var(--light);
+            transition: background-color 0.3s ease;
+        }
+        
+        #selbtn:hover, #upbtn:hover, #downbtn:hover {
+            background-color: var(--light-primary);
+            color: var(--primary);
+        }
+        
+        #extlab {
+            font-size: 18px;
+            color: var(--dark);
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        #myimg {
+            max-width: 100%;
+            max-height: 300px;
+            margin-bottom: 16px;
+        }
+        
+        #upprogress {
+            font-size: 16px;
+            color: var(--dark);
+            display: block;
+            margin-top: 8px;
+        }
         
 
         @media (max-width: 1080px) {
@@ -668,6 +754,15 @@
             }
 
             .update-form button[type="submit"] {
+                width: 100%;
+            }
+
+            .form-container {
+                padding: 16px;
+            }
+
+            #createForm input[type="text"],
+            #createForm input[type="number"] {
                 width: 100%;
             }
         }
