@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id" id="home">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+      var map;
+      var myCenter = new google.maps.LatLng(
+        -6.304917503345618,
+        106.7214212439519
+      );
+      var marker;
+      function initialize() {
+        var mapProp = {
+          center: myCenter,
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+        };
+
+        map = new google.maps.Map(
+          document.getElementById("surgakucingbintaro"),
+          mapProp
+        );
+      }
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dist/css/style.css" />
+    <title>KUCINGKU</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+
+      h1 {
+        font-family: "Permanent Marker", cursive;
+        color: #ffffff;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .about {
+        padding: 50px 20px;
+        background-color: #f8f8f8;
+        text-align: center;
+      }
+
+      .about h2 {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        color: #333;
+      }
+
+      .about p {
+        font-family: "Poppins", sans-serif;
+        font-weight: 300;
+        color: #666;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 20px auto 0;
+      }
+
+      button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .hero button {
+        display: inline-block;
+        margin: 20px 0;
+      }
+
+      .logo-link {
+        text-decoration: none;
+      }
+
+      .logo-link h1 {
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="container">
+          <div class="box-navbar">
+            <div class="logo">
+              <a href="#home" class="logo-link"><h1>KucingKu</h1></a>
+            </div>
+            <ul class="menu">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#help">Location</a></li>
+              <li><a href="login.html">Sign out</a></li>
+            </ul>
+            <i class="fa-solid fa-bars menu-bar"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="container">
+          <div class="box-hero">
+            <div class="box">
+              <h1>Ingin Bermain Bersama Kucing? <br /></h1>
+              <a href="#about"><button>Selengkapnya</button></a>
+            </div>
+            <div class="box">
+              <img src="assets/img/CATS2.jpeg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- About -->
+    <div class="about" id="about">
+      <div class="container">
+        <h2>Apa Itu Rumah Kucing?</h2>
+        <p>
+          Rumah kucing adalah tempat yang dirancang khusus untuk kucing agar
+          mereka dapat bermain, bersantai, dan merasa aman. Di sini, kucing
+          mendapatkan perawatan terbaik, lingkungan yang bersih, dan berbagai
+          fasilitas yang membuat mereka tetap aktif dan bahagia. Rumah kucing
+          seringkali memiliki berbagai mainan, tempat tidur yang nyaman, dan
+          area bermain yang luas untuk memastikan kucing merasa betah dan
+          terhibur.
+        </p>
+      </div>
+    </div>
+    <!-- About -->
+
+    <!-- Services -->
+    <div class="services" id="services">
+      <div class="container">
+        <div class="box-services">
+          <div class="box">
+            <i class="fa-solid fa-coins"></i>
+            <h4>Harga Terjangkau</h4>
+            <p></p>
+          </div>
+          <div class="box">
+            <i class="fa-solid fa-certificate"></i>
+            <h4>Sudah Tersertifikasi</h4>
+          </div>
+          <div class="box">
+            <i class="fa-solid fa-people-roof"></i>
+            <h4>Aman dan Ramah</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Services -->
+
+    <!-- Help -->
+    <div class="help" id="help">
+      <div class="container">
+        <div class="box-help">
+          <div class="box">
+            <img src="assets/img/RK_B.jpg" alt="" />
+            <h3>Rumah Kucing Bintaro</h3>
+            <button class="detail-btn" data-detail="detail1.html">
+              Detail
+            </button>
+          </div>
+          <div class="box">
+            <img src="assets/img/CAT-2.jpeg" alt="" />
+            <h3>Rumah Kucing 2</h3>
+            <button class="detail-btn" data-detail="detail2.html">
+              Detail
+            </button>
+          </div>
+          <div class="box">
+            <img src="assets/img/CAT-3.jpeg" alt="" />
+            <h3>Rumah Kucing 3</h3>
+            <button class="detail-btn" data-detail="detail3.html">
+              Detail
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Help -->
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="container">
+        <div class="box-footer">
+          <div class="box">
+            <h1>KucingKu</h1>
+          </div>
+          <div class="box">
+            <h3>Menu</h3>
+            <span><a href="#home">Home</a></span>
+            <a href="#about">About</a>
+            <a href="#help">Location</a>
+            <a href="#daftar">Daftar</a>
+          </div>
+          <div class="box">
+            <p>&copy; Copyright by <span>Group 11</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+
+    <script>
+      // Ambil semua tombol detail
+      const detailButtons = document.querySelectorAll(".detail-btn");
+
+      // Tambahkan event listener untuk setiap tombol
+      detailButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          // Dapatkan URL detail dari atribut data-detail
+          const detailURL = button.getAttribute("data-detail");
+          // Arahkan ke halaman detail yang sesuai
+          window.location.href = detailURL;
+        });
+      });
+
+      // Auto Logout Script
+      let logoutTimer;
+      const logoutTime = 10 * 60 * 1000; // 10 minutes
+
+      function resetLogoutTimer() {
+        clearTimeout(logoutTimer);
+        logoutTimer = setTimeout(() => {
+          alert("Session expired. You will be logged out.");
+          window.location.href = "login.html"; // Redirect to login page
+        }, logoutTime);
+      }
+
+      // Reset the timer on any activity
+      window.onload = resetLogoutTimer;
+      document.onmousemove = resetLogoutTimer;
+      document.onkeypress = resetLogoutTimer;
+      document.onclick = resetLogoutTimer;
+      document.onscroll = resetLogoutTimer;
+    </script>
+  </body>
+</html>

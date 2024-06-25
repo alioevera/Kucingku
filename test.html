@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase Authentication Example</title>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <!-- Firebase Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
+  </head>
+  <body>
+    <button id="loginButton">Login with Google</button>
+
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBcI_ZXUaJBhHw_x78_3ZpH1R3CZOJEqrY",
+        authDomain: "user-kucingku.firebaseapp.com",
+        projectId: "user-kucingku",
+        storageBucket: "user-kucingku.appspot.com",
+        messagingSenderId: "676085758005",
+        appId: "1:676085758005:web:8268ac3dc19bc7f517197c",
+        measurementId: "G-M3EJJF58KK",
+      };
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+
+      // Initialize Firebase Authentication and get a reference to the service
+      const auth = firebase.auth();
+
+      // Setup Google provider
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      document.getElementById("loginButton").addEventListener("click", () => {
+        auth
+          .signInWithPopup(provider)
+          .then((result) => {
+            // User signed in
+            console.log("User signed in: ", result.user);
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            console.error("Error during sign in: ", error);
+          });
+      });
+    </script>
+  </body>
+</html>

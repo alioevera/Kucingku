@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Kucingku</title>
+
+    <!-- Tambahkan Google Places API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"></script>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="#" class="logo">
+            <img src="images/logo.png" alt="Logo">
+        </a>
+        <ul class="side-menu">
+            <li><a href="#"><i class='bx bxs-dashboard'></i><span>Dashboard</span></a></li>
+            <li class="active">
+                <a href="#"><i class='bx bx-analyse'></i><span>Place</span></a>
+                <ul class="submenu">
+                    <li><a href="addPlace.html">Add Place</a></li>
+                    <li><a href="viewPlace.html">View Place</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class='bx bx-message-square-dots'></i><span>Review</span></a></li>
+            <li><a href="#"><i class='bx bx-group'></i><span>Users</span></a></li>
+            <li><a href="#"><i class='bx bx-cog'></i><span>Settings</span></a></li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bx-log-out-circle'></i><span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+            <a href="#" class="notif">
+                <i class='bx bx-bell'></i>
+                <span class="count">12</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="images/logo.png" alt="Profile">
+            </a>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Dashboard</h1>
+                    <ul class="breadcrumbs">
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="right">
+                    <button>Button</button>
+                </div>
+            </div>
+
+            <!-- Data Section -->
+            <div class="data">
+                <div class="content-data">
+                    <div class="head">
+                        <h3>Place Data</h3>
+                        <div class="icon">
+                            <i class='bx bx-data'></i>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Place Code</th>
+                                    <th>Place Image</th>
+                                    <th>Place Name</th>
+                                    <th>Address</th>
+                                    <th>Place Owner</th>
+                                    <th>Rating</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data rows will go here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { getDatabase, ref, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+            authDomain: "project-kucing.firebaseapp.com",
+            databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
+            projectId: "project-kucing",
+            storageBucket: "project-kucing.appspot.com",
+            messagingSenderId: "670406034488",
+            appId: "1:670406034488:web:e5e24491d859491abb12cd",
+            measurementId: "G-CTMSWG4E5W"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase();
+
+        function getStatusText(rating) {
+            switch (rating) {
+                case 5:
+                    return 'Excellent';
+                case 4:
+                    return 'Good';
+                case 3:
+                    return 'Standard';
+                case 2:
+                    return 'Bad';
+                case 1:
+                    return 'Terrible';
+                default:
+                    return 'No Rating';
+            }
+        }
+
+        // Ensure that the redirectToUpdate function is globally accessible
+        window.redirectToUpdate = function (idPlace) {
+            console.log('Redirecting to update page for placeId:', idPlace);
+            window.location.href = `updatePlace.html?placeId=${idPlace}`;
+        };
+
+        // Ensure that the deleteData function is globally accessible
+        window.deleteData = function (idPlace) {
+            console.log('Attempting to delete place with id:', idPlace);
+            remove(ref(db, 'PlacesSet/' + idPlace))
+                .then(() => {
+                    alert("Data Deleted Successfully");
+                    console.log("Delete successful");
+                    loadData(); // Refresh the data after deletion
+                }).catch((error) => {
+                    alert("Unsuccessful");
+                    console.error("Delete failed:", error);
+                });
+        };
+
+        function loadData() {
+            const placesRef = ref(db, 'PlacesSet/');
+            onValue(placesRef, (snapshot) => {
+                const data = snapshot.val();
+                const tbody = document.querySelector('.data-table tbody');
+                tbody.innerHTML = ''; // Clear existing rows
+
+                for (const key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        const place = data[key];
+                        const row = document.createElement('tr');
+
+                        row.innerHTML = `
+                        <td>${key}</td>
+                        <td><img src="${place.plImage}" alt="Place Image" style="width:100px; height:auto;"></td>
+                        <td>${place.plName}</td>
+                        <td>${place.plAddress}</td>
+                        <td>${place.plOwner}</td>
+                        <td>${place.rating}</td>
+                        <td>${getStatusText(place.rating)}</td>
+                        <td>
+                            <button class="action-btn edit" onclick="redirectToUpdate('${key}')">Edit</button>
+                            <button class="action-btn delete" onclick="deleteData('${key}')">Delete</button>
+                        </td>
+                    `;
+
+                        tbody.appendChild(row);
+                    }
+                }
+            });
+        }
+
+        window.onload = loadData;
+    </script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

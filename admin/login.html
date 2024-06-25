@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="box">
+            <div class="box-login" id="login">
+                <div class="top-header">
+                    <h3>Login</h3>
+                </div>
+                <div class="input-group">
+                    <form id="loginForm">
+                        <div class="input-field">
+                            <input type="text" class="input-box" id="logEmail" required>
+                            <label for="logEmail">Email address</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" class="input-box" id="logPassword" required>
+                            <label for="logPassword">Password</label>
+                            <div class="eye-area">
+                                <div class="eye-box" onclick="togglePassword('logPassword', 'eye', 'eye-slash')">
+                                    <i class="fa-regular fa-eye" id="eye"></i>
+                                    <i class="fa-regular fa-eye-slash" id="eye-slash"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="remember">
+                            <input type="checkbox" id="formCheck" class="check">
+                            <label for="formCheck">Remember Me</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="submit" class="input-submit" value="Sign In">
+                        </div>
+                        <div class="forgot">
+                            <a href="#">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="box-register" id="register">
+                <div class="top-header">
+                    <h3>Sign Up</h3>
+                </div>
+                <div class="input-group">
+                    <form id="registerForm">
+                        <div class="input-field">
+                            <input type="text" class="input-box" id="regUsername" required>
+                            <label for="regUsername">Username</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="text" class="input-box" id="regEmail" required>
+                            <label for="regEmail">Email address</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" class="input-box" id="regPassword" required>
+                            <label for="regPassword">Password</label>
+                            <div class="eye-area">
+                                <div class="eye-box" onclick="togglePassword('regPassword', 'eye-2', 'eye-slash-2')">
+                                    <i class="fa-regular fa-eye" id="eye-2"></i>
+                                    <i class="fa-regular fa-eye-slash" id="eye-slash-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="remember">
+                            <input type="checkbox" id="formCheck2" class="check">
+                            <label for="formCheck2">Remember Me</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="submit" class="input-submit" value="Sign Up">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="switch">
+                <a href="#" class="login active" onclick="login()">Login</a>
+                <a href="#" class="register" onclick="register()">Register</a>
+                <div class="btn-active" id="btn"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCorsR9lGbJhH9MrhWKehzwVQiNnIK67UI",
+        authDomain: "kucingku-login.firebaseapp.com",
+        projectId: "kucingku-login",
+        storageBucket: "kucingku-login.appspot.com",
+        messagingSenderId: "405947621791",
+        appId: "1:405947621791:web:93ffa2dec19db109889daa",
+        measurementId: "G-20SH9HY2FQ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    // Function to register user
+    window.RegisterUser = (evt) => {
+        evt.preventDefault();
+
+        const regUsername = document.getElementById('regUsername').value;
+        const regEmail = document.getElementById('regEmail').value;
+        const regPassword = document.getElementById('regPassword').value;
+
+        createUserWithEmailAndPassword(auth, regEmail, regPassword)
+            .then((credentials) => {
+                set(ref(db, 'UserAuthList/' + credentials.user.uid), {
+                    usernameRegist: regUsername,
+                    emailRegist: regEmail
+                });
+                alert("Registration successful!");
+            })
+            .catch((error) => {
+                alert("Registration failed. " + error.message);
+                console.log(error.code);
+                console.log(error.message);
+            });
+    };
+
+    // Function to login user
+    window.LoginUser = (evt) => {
+        evt.preventDefault();
+
+        const email = document.getElementById('logEmail').value.trim();
+        const password = document.getElementById('logPassword').value.trim();
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((credentials) => {
+                get(child(ref(db), 'UserAuthList/' + credentials.user.uid))
+                    .then((snapshot) => {
+                        if (snapshot.exists()) {
+                            sessionStorage.setItem("user-info", JSON.stringify({
+                                usernameRegist: snapshot.val().usernameRegist,
+                                emailRegist: snapshot.val().emailRegist
+                            }));
+                            sessionStorage.setItem("user-creds", JSON.stringify(credentials.user));
+                            alert("Login successful!");
+                            window.location.href = 'index.html';
+                        }
+                    })
+                    .catch((error) => {
+                        alert("Login failed. " + error.message);
+                        console.log(error.code);
+                        console.log(error.message);
+                    });
+            })
+            .catch((error) => {
+                alert("Login failed. " + error.message);
+                console.log(error.code);
+                console.log(error.message);
+            });
+    };
+
+    // Function to toggle password visibility
+    window.togglePassword = (passwordId, eyeId, eyeSlashId) => {
+        const passwordField = document.getElementById(passwordId);
+        const eyeIcon = document.getElementById(eyeId);
+        const eyeSlashIcon = document.getElementById(eyeSlashId);
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.style.display = "none";
+            eyeSlashIcon.style.display = "inline";
+        } else {
+            passwordField.type = "password";
+            eyeIcon.style.display = "inline";
+            eyeSlashIcon.style.display = "none";
+        }
+    };
+
+    // Function to switch to login form
+    window.login = () => {
+        document.getElementById('login').style.left = "27px";
+        document.getElementById('register').style.right = "-350px";
+        document.getElementById('btn').style.left = "0px";
+    };
+
+    // Function to switch to register form
+    window.register = () => {
+        document.getElementById('login').style.left = "-350px";
+        document.getElementById('register').style.right = "27px";
+        document.getElementById('btn').style.left = "125px";
+    };
+
+    // Add event listeners to forms
+    document.getElementById('registerForm').addEventListener('submit', RegisterUser);
+    document.getElementById('loginForm').addEventListener('submit', LoginUser);
+</script>
+</html>
