@@ -26,7 +26,7 @@
       }
 
       main img {
-        width: 60%; /* Adjust this value to control the size of the image */
+        width: 60%;
         border-radius: 8px;
         display: block;
         margin: 0 auto;
@@ -42,7 +42,7 @@
         font-size: 16px;
         line-height: 1.6;
         color: #666;
-        margin-bottom: 10px; /* Add margin-bottom to move buttons up */
+        margin-bottom: 10px;
       }
 
       #map {
@@ -50,23 +50,24 @@
         height: 400px;
         margin-top: 20px;
         border-radius: 8px;
-        margin-bottom: 10px; /* Add margin-bottom to move buttons up */
+        margin-bottom: 10px;
       }
 
       .navigation-buttons {
         display: flex;
         justify-content: space-between;
-        margin-top: 90px; /* Reduce margin-top to move buttons up */
+        margin-top: 10px;
       }
 
       .navigation-buttons button {
         padding: 10px 20px;
         font-size: 16px;
-        background-color: #4caf50;
+        background-color: #ff6701;
         color: white;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        margin-bottom: 50px;
       }
 
       .navigation-buttons button:hover {
@@ -91,9 +92,9 @@
     ></script>
     <script>
       function initMap() {
-        // The location of Rumah Kucing 1
-        const location = { lat: -6.304917503345618, lng: 106.7214212439519 }; // Replace with actual coordinates
-        // The map, centered at Rumah Kucing 1
+        // The location of Rumah Kucing 3
+        const location = { lat: -6.506546451845382, lng: 106.72319869882135 }; // Replace with actual coordinates
+        // The map, centered at Rumah Kucing 3
         const map = new google.maps.Map(document.getElementById("map"), {
           zoom: 15,
           center: location,
@@ -108,15 +109,14 @@
   </head>
   <body>
     <main>
-      <img src="assets/img/CAT-2.jpeg" alt="Rumah Kucing 1" />
+      <img src="assets/img/CAT-3.jpeg" alt="Rumah Kucing 1" />
       <p>
-        Grand Bintaro Garden Residence Blok F3, Jl. Merpati Raya No.27, Sawah
-        Baru, Kec, Kec. Ciputat, Kota Tangerang Selatan, Banten 15413
+        Jalan Pasir Naga,Rt.01 Rw.07,kel.Pabuaran Kec.Kemang, Pabuaran, Kec.
+        Parung, Kabupaten Bogor, Jawa Barat 16310
       </p>
       <div id="map"></div>
       <div class="navigation-buttons">
-        <button onclick="window.location.href='index.html'">Back</button>
-        <button onclick="window.location.href='detail2.html'">Next</button>
+        <button onclick="window.location.href='index.html'">Home</button>
       </div>
     </main>
     <footer>
