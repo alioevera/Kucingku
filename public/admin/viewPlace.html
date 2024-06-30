@@ -7,8 +7,6 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
     <title>Kucingku</title>
-
-    <!-- Tambahkan Google Places API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"></script>
 </head>
 
@@ -111,12 +109,10 @@
     </div>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-        import { getDatabase, ref, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
             authDomain: "project-kucing.firebaseapp.com",
@@ -128,13 +124,12 @@
             measurementId: "G-CTMSWG4E5W"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getDatabase();
 
         function getStatusText(rating) {
-            switch (rating) {
+            switch (parseInt(rating)) {
                 case 5:
                     return 'Excellent';
                 case 4:
@@ -150,20 +145,15 @@
             }
         }
 
-        // Ensure that the redirectToUpdate function is globally accessible
         window.redirectToUpdate = function (idPlace) {
-            console.log('Redirecting to update page for placeId:', idPlace);
             window.location.href = `updatePlace.html?placeId=${idPlace}`;
         };
 
-        // Ensure that the deleteData function is globally accessible
         window.deleteData = function (idPlace) {
-            console.log('Attempting to delete place with id:', idPlace);
             remove(ref(db, 'PlacesSet/' + idPlace))
                 .then(() => {
                     alert("Data Deleted Successfully");
-                    console.log("Delete successful");
-                    loadData(); // Refresh the data after deletion
+                    loadData();
                 }).catch((error) => {
                     alert("Unsuccessful");
                     console.error("Delete failed:", error);
@@ -175,7 +165,7 @@
             onValue(placesRef, (snapshot) => {
                 const data = snapshot.val();
                 const tbody = document.querySelector('.data-table tbody');
-                tbody.innerHTML = ''; // Clear existing rows
+                tbody.innerHTML = ''; 
 
                 for (const key in data) {
                     if (data.hasOwnProperty(key)) {

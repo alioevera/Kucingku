@@ -720,6 +720,53 @@
             display: block;
             margin-top: 8px;
         }
+
+        .review-item {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+          }
+          
+          .review-item strong {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            color: #333;
+          }
+          
+          .review-item p {
+            font-family: "Poppins", sans-serif;
+            font-weight: 300;
+            color: #666;
+            line-height: 1.6;
+            margin-top: 10px;
+          }
+          
+          .review-item span {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            color: #999;
+            font-size: 14px;
+            display: block;
+            margin-top: 5px;
+          }
+
+          .reviews form button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+          }
+          
+          .reviews form button:hover {
+            background-color: #555;
+          }
+          
         
 
         @media (max-width: 1080px) {

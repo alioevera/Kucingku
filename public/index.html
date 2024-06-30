@@ -251,9 +251,8 @@
               <li><a href="#help">Location</a></li>
               <li><a href="#reviews">Reviews</a></li>
               <li><a href="login.html">Sign out</a></li>
-              <script type="module" src="dist/js/signout.js"></script>
             </ul>
-            <i class="fa-solid fa-bars menu-bar"></i>
+            <i class="fas fa-bars menu-bar"></i> <!-- Corrected class name -->
           </div>
         </div>
       </div>
@@ -262,7 +261,7 @@
         <div class="container">
           <div class="box-hero">
             <div class="box">
-              <h1>Ingin Bermain Bersama Kucing? <br /></h1>
+              <h1>Ingin Bermain Bersama Kucing?</h1> <!-- Fixed heading -->
               <a href="#about"><button>Selengkapnya</button></a>
             </div>
             <div class="box">
@@ -273,7 +272,7 @@
       </div>
     </header>
 
-    <!-- About -->
+    <!-- About section -->
     <div class="about" id="about">
       <div class="container">
         <h2>Apa Itu Rumah Kucing?</h2>
@@ -288,50 +287,50 @@
         </p>
       </div>
     </div>
-    <!-- About -->
+    <!-- About section -->
 
-    <!-- Services -->
+    <!-- Services section -->
     <div class="services" id="services">
       <div class="container">
         <div class="box-services">
           <div class="box">
-            <i class="fa-solid fa-coins"></i>
+            <i class="fas fa-coins"></i> <!-- Corrected class name -->
             <h4>Harga Terjangkau</h4>
-            <p></p>
+            <p>Informasi tambahan tentang harga.</p> <!-- Add more details -->
           </div>
           <div class="box">
-            <i class="fa-solid fa-certificate"></i>
+            <i class="fas fa-certificate"></i> <!-- Corrected class name -->
             <h4>Sudah Tersertifikasi</h4>
           </div>
           <div class="box">
-            <i class="fa-solid fa-people-roof"></i>
+            <i class="fas fa-people-roof"></i> <!-- Corrected class name -->
             <h4>Aman dan Ramah</h4>
           </div>
         </div>
       </div>
     </div>
-    <!-- Services -->
+    <!-- Services section -->
 
-    <!-- Help -->
+    <!-- Help section -->
     <div class="help" id="help">
       <div class="container">
         <div class="box-help">
           <div class="box">
-            <img src="assets/img/RK_B.jpg" alt="" />
+            <img src="assets/img/RK_B.jpg" alt="Rumah Kucing Bintaro" />
             <h3>Rumah Kucing Bintaro</h3>
             <button class="detail-btn" data-detail="detail1.html">
               Detail
             </button>
           </div>
           <div class="box">
-            <img src="assets/img/CAT-2.jpeg" alt="" />
+            <img src="assets/img/CAT-2.jpeg" alt="Rumah Kucing .com" />
             <h3>Rumah Kucing .com</h3>
             <button class="detail-btn" data-detail="detail2.html">
               Detail
             </button>
           </div>
           <div class="box">
-            <img src="assets/img/CAT-3.jpeg" alt="" />
+            <img src="assets/img/CAT-3.jpeg" alt="Rumah Kucing Parung" />
             <h3>Rumah Kucing Parung</h3>
             <button class="detail-btn" data-detail="detail3.html">
               Detail
@@ -340,24 +339,28 @@
         </div>
       </div>
     </div>
-    <!-- Help -->
+    <!-- Help section -->
 
-    <!-- Reviews -->
+    <!-- Reviews section -->
     <div class="reviews" id="reviews">
       <div class="container">
         <h2>Reviews</h2>
         <form id="review-form">
           <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required />
+            <label for="usName">Name:</label>
+            <input type="text" id="usName" name="usName" required />
           </div>
           <div>
-            <label for="review">Review:</label>
-            <textarea id="review" name="review" required></textarea>
+            <label for="plName">Place Name:</label>
+            <input type="text" id="plName" name="plName" required />
           </div>
           <div>
-            <label for="rating">Rating:</label>
-            <select id="rating" name="rating" required>
+            <label for="usReview">Review:</label>
+            <textarea id="usReview" name="usReview" required></textarea>
+          </div>
+          <div>
+            <label for="usRating">Rating:</label>
+            <select id="usRating" name="usRating" required>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -365,14 +368,14 @@
               <option value="5">5</option>
             </select>
           </div>
-          <button type="submit">Submit Review</button>
+          <button id="subBtn" type="submit">Submit Review</button>
         </form>
-        <div id="reviews-list">
+        <div id="reviews-list" class="reviews-list">
           <!-- User reviews will be displayed here -->
         </div>
       </div>
     </div>
-    <!-- Reviews -->
+    <!-- Reviews section -->
 
     <!-- Footer -->
     <div class="footer">
@@ -397,39 +400,75 @@
     </div>
     <!-- Footer -->
 
-    <script>
-      // Ambil semua tombol detail
-      const detailButtons = document.querySelectorAll(".detail-btn");
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-performance.js"></script>
 
-      // Tambahkan event listener untuk setiap tombol
-      detailButtons.forEach((button) => {
-        button.addEventListener("click", function () {
-          // Dapatkan URL detail dari atribut data-detail
-          const detailURL = button.getAttribute("data-detail");
-          // Arahkan ke halaman detail yang sesuai
-          window.location.href = detailURL;
-        });
-      });
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-      // Handle review form submission
+      const firebaseConfig = {
+    apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+    authDomain: "project-kucing.firebaseapp.com",
+    databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
+    projectId: "project-kucing",
+    storageBucket: "project-kucing.appspot.com",
+    messagingSenderId: "670406034488",
+    appId: "1:670406034488:web:e5e24491d859491abb12cd",
+    measurementId: "G-CTMSWG4E5W"
+  };
+
+      initializeApp(firebaseConfig);
+
+      const db = getDatabase();
+      const reviewsRef = ref(db, 'reviews');
       const reviewForm = document.getElementById("review-form");
       const reviewsList = document.getElementById("reviews-list");
 
       reviewForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const name = document.getElementById("name").value;
-        const review = document.getElementById("review").value;
-        const rating = document.getElementById("rating").value;
+  e.preventDefault();
 
-        const reviewItem = document.createElement("div");
-        reviewItem.classList.add("review-item");
-        reviewItem.innerHTML = `<strong>${name}</strong> (${rating} stars): <p>${review}</p>`;
-        reviewsList.appendChild(reviewItem);
+  const usName = document.getElementById("usName").value;
+  const plName = document.getElementById("plName").value;
+  const usReview = document.getElementById("usReview").value;
+  const usRating = parseInt(document.getElementById("usRating").value); // Convert to integerf
 
-        reviewForm.reset();
-      });
+  // Save review to Firebase Realtime Database
+  push(reviewsRef, {
+    usName: usName,
+    plName: plName,
+    usReview: usReview,
+    usRating: usRating
+  });
 
-      // Auto Logout Script
+  // Display review in the UI with star ratings
+  const reviewItem = document.createElement("div");
+  reviewItem.classList.add("review-item");
+
+  // Generate star icons based on usRating
+  let starsHtml = "";
+  for (let i = 1; i <= 5; i++) {
+    if (i <= usRating) {
+      starsHtml += '<i class="fas fa-star"></i>'; // Full star
+    } else {
+      starsHtml += '<i class="far fa-star"></i>'; // Empty star
+    }
+  }
+
+  reviewItem.innerHTML = `
+    <strong>${usName}</strong> reviewed <strong>${plName}</strong>:
+    <div class="rating-stars">${starsHtml}</div>
+    <p>${usReview}</p>
+  `;
+
+  reviewsList.appendChild(reviewItem);
+});
+
+      // Auto logout timer
       let logoutTimer;
       const logoutTime = 10 * 60 * 1000; // 10 minutes
 
@@ -442,11 +481,11 @@
       }
 
       // Reset the timer on any activity
-      window.onload = resetLogoutTimer;
-      document.onmousemove = resetLogoutTimer;
-      document.onkeypress = resetLogoutTimer;
-      document.onclick = resetLogoutTimer;
-      document.onscroll = resetLogoutTimer;
+      document.addEventListener("DOMContentLoaded", resetLogoutTimer);
+      document.addEventListener("mousemove", resetLogoutTimer);
+      document.addEventListener("keypress", resetLogoutTimer);
+      document.addEventListener("click", resetLogoutTimer);
+      document.addEventListener("scroll", resetLogoutTimer);
     </script>
   </body>
 </html>

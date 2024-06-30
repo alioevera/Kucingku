@@ -24,7 +24,6 @@
                 <ul class="submenu">
                     <li><a href="addPlace.html">Add Place</a></li>
                     <li><a href="viewPlace.html">View Place</a></li>
-                    <!-- <li><a href="updatePlace.html">Update Place</a></li> -->
                 </ul>
             </li>
             <li><a href="#"><i class='bx bx-message-square-dots'></i><span>Review</span></a></li>
@@ -161,14 +160,15 @@
 
         // Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyDRfdDMQLeemz74kgulPMKqsD7PQMI1qMU",
-          authDomain: "kucingku-b4d35.firebaseapp.com",
-          projectId: "kucingku-b4d35",
-          storageBucket: "kucingku-b4d35.appspot.com",
-          messagingSenderId: "557948775204",
-          appId: "1:557948775204:web:4515b9bc99215b305be1b1",
-          measurementId: "G-0WRRMLSLND"
-        };
+    apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+    authDomain: "project-kucing.firebaseapp.com",
+    databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
+    projectId: "project-kucing",
+    storageBucket: "project-kucing.appspot.com",
+    messagingSenderId: "670406034488",
+    appId: "1:670406034488:web:e5e24491d859491abb12cd",
+    measurementId: "G-CTMSWG4E5W"
+  };
 
         // Initialize Firebase app
         const app = initializeApp(firebaseConfig);
@@ -250,11 +250,29 @@
                 plImage: imageURL
             }).then(() => {
                 alert("Data Added Successfully");
+                window.location.href = 'viewPlace.html';
             }).catch((error) => {
                 alert("Failed to add data");
                 console.error(error);
             });
         }
+
+        function getStatusText(rating) {
+    switch (parseInt(rating)) {
+        case 5:
+            return 'Excellent';
+        case 4:
+            return 'Good';
+        case 3:
+            return 'Standard';
+        case 2:
+            return 'Bad';
+        case 1:
+            return 'Terrible';
+        default:
+            return 'No Rating';
+    }
+}
 
         function retData() {
             const dbRef = ref(db);
