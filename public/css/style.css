@@ -629,11 +629,7 @@
         .action-btn.delete:hover {
             background: var(--light-danger);
             color: var(--danger);
-<<<<<<<< HEAD:public/css/style.css
-        }
-========
-        }    
->>>>>>>> 4bb1e8fd23c01898bcdab36d59ceaf291c32a387:admin/css/style.css
+        }  
         
         .form-container {
             max-width: 600px;
@@ -725,7 +721,7 @@
             background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(224, 213, 154, 0.1);
             margin-bottom: 20px;
           }
           

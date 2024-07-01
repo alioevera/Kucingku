@@ -629,14 +629,10 @@
         .action-btn.delete:hover {
             background: var(--light-danger);
             color: var(--danger);
-<<<<<<<< HEAD:public/css/style.css
-        }
-========
         }    
->>>>>>>> 4bb1e8fd23c01898bcdab36d59ceaf291c32a387:admin/css/style.css
         
         .form-container {
-            max-width: 600px;
+            margin-bottom: 20px;
             margin: 40px auto;
             padding: 20px;
             background-color: var(--light);
@@ -720,7 +716,86 @@
             display: block;
             margin-top: 8px;
         }
+
+        .review-data {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
         
+        .review-data .head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .review-data .head h3 {
+            margin: 0;
+        }
+        
+        .review-container {
+            overflow-x: auto;
+        }
+        
+        .review-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .review-table th,
+        .review-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .review-table th {
+            background-color: #f2f2f2;
+            color: #555;
+        }
+        
+        .review-table td {
+            vertical-align: top;
+        }
+        
+        .rating-stars {
+            color: #ffd700;
+        }
+        
+        .action-btn {
+            padding: 8px 15px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .action-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .pagination button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
+
+
 
         @media (max-width: 1080px) {
             .sidebar {
