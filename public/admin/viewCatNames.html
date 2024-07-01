@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Admin Dashboard | View Cat Names</title>
+    <style>
+      /* Additional CSS for viewCatNames.html */
+      .cat_names {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .cat_names h1 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      #catTable {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      #catTable th,
+      #catTable td {
+        padding: 12px;
+        border: 1px solid #ccc;
+        text-align: left;
+      }
+
+      #catTable th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+      }
+
+      #catTable tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .action-btns button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .edit-btn {
+        background-color: #28a745;
+        color: #fff;
+      }
+
+      .delete-btn {
+        background-color: #dc3545;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" class="logo"><img src="images/logo.png" alt="Logo" /></a>
+      <ul class="side-menu">
+        <li class="active">
+          <a href="#"><i class="bx bx-analyse"></i><span>Place</span></a>
+          <ul class="submenu">
+            <li><a href="addPlace.html">Add Place</a></li>
+            <li><a href="viewPlace.html">View Place</a></li>
+            <li><a href="addCatNames.html">Add Cat</a></li>
+            <li><a href="viewCatNames.html">View Cat</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="viewReview.html"
+            ><i class="bx bx-message-square-dots"></i><span>Review</span></a
+          >
+        </li>
+        <li>
+          <a href="#"><i class="bx bx-group"></i><span>Users</span></a>
+        </li>
+        <li>
+          <a href="#"><i class="bx bx-cog"></i><span>Settings</span></a>
+        </li>
+        <li>
+          <a href="catnames.html"
+            ><i class="bx bx-cat"></i><span>Cat Names</span></a
+          >
+        </li>
+      </ul>
+      <ul class="side-menu">
+        <li>
+          <a href="login.html" id="logoutBtn">
+            <i class="bx bx-log-out-circle"></i><span>Logout</span></a
+          >
+        </li>
+      </ul>
+    </div>
+    <!-- Content -->
+    <div class="content">
+      <nav>
+        <i class="bx bx-menu"></i>
+        <!-- Search Form -->
+        <form action="#">
+          <div class="form-input">
+            <input type="search" placeholder="Search..." />
+            <button class="search-btn" type="submit">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <!-- Theme Toggle -->
+        <input type="checkbox" id="theme-toggle" hidden />
+        <label for="theme-toggle" class="theme-toggle"></label>
+        <!-- Notifications -->
+        <a href="#" class="notif"
+          ><i class="bx bx-bell"></i><span class="count">12</span></a
+        >
+        <!-- Profile -->
+        <a href="#" class="profile"
+          ><img src="images/logo.png" alt="Profile"
+        /></a>
+      </nav>
+      <main>
+        <!-- Main Header -->
+        <div class="header">
+          <div class="left">
+            <h1>View Cat Names</h1>
+            <!-- Breadcrumbs -->
+            <ul class="breadcrumbs">
+              <li><a href="#" class="active">Home</a></li>
+              <li><a href="#">View Cat Names</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Table Section -->
+        <div class="cat_names">
+          <h1>Cat Names</h1>
+          <table border="1" id="catTable">
+            <thead>
+              <tr>
+                <th>Cat Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Cat names will be dynamically added here -->
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script>
+      // Firebase Initialization
+      const firebaseConfig = {
+        apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+        authDomain: "project-kucing.firebaseapp.com",
+        databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
+        projectId: "project-kucing",
+        storageBucket: "project-kucing.appspot.com",
+        messagingSenderId: "670406034488",
+        appId: "1:670406034488:web:e5e24491d859491abb12cd",
+        measurementId: "G-CTMSWG4E5W",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const database = firebase.database();
+
+      // Function to fetch cat names from Realtime Database
+      function fetchCatNamesRealtime() {
+        const catsRef = database.ref("cats");
+
+        // Listen for changes in 'cats' node
+        catsRef.on("value", (snapshot) => {
+          const cats = snapshot.val();
+          const tbody = document.querySelector("#catTable tbody");
+          tbody.innerHTML = ""; // Clear existing rows
+
+          // Iterate over cats and add to table
+          for (const key in cats) {
+            if (cats.hasOwnProperty(key)) {
+              const cat = cats[key];
+              const row = tbody.insertRow();
+              row.insertCell(0).textContent = cat.name;
+
+              // Create action buttons
+              const actionsCell = row.insertCell(1);
+              const editButton = document.createElement("button");
+              editButton.textContent = "Edit";
+              editButton.classList.add("edit-btn");
+              editButton.onclick = () => editCatName(key, cat.name);
+              const deleteButton = document.createElement("button");
+              deleteButton.textContent = "Delete";
+              deleteButton.classList.add("delete-btn");
+              deleteButton.onclick = () => deleteCatName(key);
+              actionsCell.appendChild(editButton);
+              actionsCell.appendChild(deleteButton);
+            }
+          }
+        });
+      }
+
+      // Function to edit cat name
+      function editCatName(catId, oldName) {
+        const newName = prompt("Enter new name for the cat:", oldName);
+        if (newName && newName.trim() !== "") {
+          database.ref("cats/" + catId).update({ name: newName.trim() });
+        }
+      }
+
+      // Function to delete cat name
+      function deleteCatName(catId) {
+        if (confirm("Are you sure you want to delete this cat name?")) {
+          database.ref("cats/" + catId).remove();
+        }
+      }
+
+      // Fetch cat names on page load
+      window.onload = function () {
+        fetchCatNamesRealtime();
+      };
+
+      // Firebase Authentication logout
+      const logoutBtn = document.getElementById("logoutBtn");
+      logoutBtn.addEventListener("click", () => {
+        auth
+          .signOut()
+          .then(() => {
+            // Sign-out successful, redirect to login page
+            window.location.href = "login.html";
+          })
+          .catch((error) => {
+            // An error happened
+            console.error("Error signing out: ", error);
+          });
+      });
+    </script>
+  </body>
+</html>

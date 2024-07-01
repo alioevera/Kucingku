@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Admin Dashboard | Add Cat Names</title>
+    <style>
+      /* Additional CSS for addCatNames.html */
+      .cat_names {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .cat_names h1 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      #catForm {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      #catForm input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      #catForm button {
+        padding: 10px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      #catForm button:hover {
+        background-color: #0056b3;
+      }
+
+      #catTable {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      #catTable th,
+      #catTable td {
+        padding: 12px;
+        border: 1px solid #ccc;
+        text-align: left;
+      }
+
+      #catTable th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+      }
+
+      #catTable tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" class="logo"><img src="images/logo.png" alt="Logo" /></a>
+      <ul class="side-menu">
+        <li class="active">
+          <a href="#"><i class="bx bx-analyse"></i><span>Place</span></a>
+          <ul class="submenu">
+            <li><a href="addPlace.html">Add Place</a></li>
+            <li><a href="viewPlace.html">View Place</a></li>
+            <li><a href="addCatNames.html">Add Cat</a></li>
+            <li><a href="viewCatNames.html">View Cat</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="viewReview.html"
+            ><i class="bx bx-message-square-dots"></i><span>Review</span></a
+          >
+        </li>
+        <li>
+          <a href="#"><i class="bx bx-group"></i><span>Users</span></a>
+        </li>
+        <li>
+          <a href="#"><i class="bx bx-cog"></i><span>Settings</span></a>
+        </li>
+        <li>
+          <a href="catnames.html"
+            ><i class="bx bx-cat"></i><span>Cat Names</span></a
+          >
+        </li>
+      </ul>
+      <ul class="side-menu">
+        <li>
+          <a href="login.html" id="logoutBtn">
+            <i class="bx bx-log-out-circle"></i><span>Logout</span></a
+          >
+        </li>
+      </ul>
+    </div>
+    <!-- Content -->
+    <div class="content">
+      <nav>
+        <i class="bx bx-menu"></i>
+        <!-- Search Form -->
+        <form action="#">
+          <div class="form-input">
+            <input type="search" placeholder="Search..." />
+            <button class="search-btn" type="submit">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <!-- Theme Toggle -->
+        <input type="checkbox" id="theme-toggle" hidden />
+        <label for="theme-toggle" class="theme-toggle"></label>
+        <!-- Notifications -->
+        <a href="#" class="notif"
+          ><i class="bx bx-bell"></i><span class="count">12</span></a
+        >
+        <!-- Profile -->
+        <a href="#" class="profile"
+          ><img src="images/logo.png" alt="Profile"
+        /></a>
+      </nav>
+      <main>
+        <!-- Main Header -->
+        <div class="header">
+          <div class="left">
+            <h1>Add Cat Names</h1>
+            <!-- Breadcrumbs -->
+            <ul class="breadcrumbs">
+              <li><a href="#" class="active">Home</a></li>
+              <li><a href="#">Add Cat Names</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Form Section -->
+        <div class="cat_names">
+          <h1>Cat Names</h1>
+          <form id="catForm">
+            <input
+              type="text"
+              id="catName"
+              placeholder="Enter cat name"
+              required
+            />
+            <button type="submit">Add Cat</button>
+          </form>
+        </div>
+      </main>
+    </div>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script>
+      // Firebase Initialization
+      const firebaseConfig = {
+        apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+        authDomain: "project-kucing.firebaseapp.com",
+        databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
+        projectId: "project-kucing",
+        storageBucket: "project-kucing.appspot.com",
+        messagingSenderId: "670406034488",
+        appId: "1:670406034488:web:e5e24491d859491abb12cd",
+        measurementId: "G-CTMSWG4E5W",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const database = firebase.database();
+
+      // Function to add cat name
+      function addCatName(catName) {
+        const catsRef = database.ref("cats");
+        catsRef.push({
+          name: catName,
+        });
+      }
+
+      // Handle form submission to add a new cat name
+      document
+        .getElementById("catForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const catNameInput = document.getElementById("catName");
+          const catName = catNameInput.value.trim();
+          if (catName) {
+            addCatName(catName);
+            catNameInput.value = ""; // Clear the input field
+          }
+        });
+
+      // Firebase Authentication logout
+      const logoutBtn = document.getElementById("logoutBtn");
+      logoutBtn.addEventListener("click", () => {
+        auth
+          .signOut()
+          .then(() => {
+            // Sign-out successful, redirect to login page
+            window.location.href = "login.html";
+          })
+          .catch((error) => {
+            // An error happened
+            console.error("Error signing out: ", error);
+          });
+      });
+    </script>
+  </body>
+</html>
