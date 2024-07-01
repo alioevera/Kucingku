@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+  <title>Responsive Dashboard Design #2 | AsmrProg</title>
+  <!-- Google Maps API Key (Replace YOUR_GOOGLE_API_KEY with your actual API key) -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"></script>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <a href="#" class="logo">
+      <img src="images/logo.png" alt="Logo">
+    </a>
+    <ul class="side-menu">
+      <li class="active">
+        <a href="#"><i class="bx bx-analyse"></i><span>Place</span></a>
+        <ul class="submenu">
+          <li><a href="addPlace.html" id="addPlaceLink">Add Place</a></li>
+          <li><a href="viewPlace.html" id="viewPlaceLink">View Place</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="viewReview.html" id="viewReviewLink"><i class="bx bx-message-square-dots"></i><span>Review</span></a>
+      </li>
+      <li>
+        <a href="#"><i class="bx bx-group"></i><span>Users</span></a>
+      </li>
+      <li>
+        <a href="#"><i class="bx bx-cog"></i><span>Settings</span></a>
+      </li>
+    </ul>
+    <ul class="side-menu">
+      <li>
+        <a href="login.html" id="logoutBtn"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <nav>
+      <i class="bx bx-menu"></i>
+      <!-- Search Form -->
+      <form action="#">
+        <div class="form-input">
+          <input type="search" placeholder="Search...">
+          <button class="search-btn" type="submit">
+            <i class="bx bx-search"></i>
+          </button>
+        </div>
+      </form>
+      <!-- Theme Toggle -->
+      <input type="checkbox" id="theme-toggle" hidden>
+      <label for="theme-toggle" class="theme-toggle"></label>
+      <!-- Notifications -->
+      <a href="#" class="notif">
+        <i class="bx bx-bell"></i>
+        <span class="count">12</span>
+      </a>
+      <!-- Profile -->
+      <a href="#" class="profile">
+        <img src="images/logo.png" alt="Profile">
+      </a>
+    </nav>
+
+    <main>
+      <!-- Main Header -->
+      <div class="header">
+        <div class="left">
+          <h1>Dashboard</h1>
+          <!-- Breadcrumbs -->
+          <ul class="breadcrumbs">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="right">
+          <button>Button</button>
+        </div>
+      </div>
+
+      <!-- Admin Activity Section -->
+      <div class="admin_activity">
+        <h1>Admin Activity History</h1>
+        <table border="1" id="activityTable">
+          <thead>
+            <tr>
+              <th>Admin Name</th>
+              <th>Activity Type</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Activities will be dynamically added here -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+
+  <!-- Firebase Initialization and Database Operations -->
+  <script type="module">
+    // Firebase SDKs
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+  apiKey: "AIzaSyBcI_ZXUaJBhHw_x78_3ZpH1R3CZOJEqrY",
+  authDomain: "user-kucingku.firebaseapp.com",
+  databaseURL: "https://user-kucingku-default-rtdb.firebaseio.com",
+  projectId: "user-kucingku",
+  storageBucket: "user-kucingku.appspot.com",
+  messagingSenderId: "676085758005",
+  appId: "1:676085758005:web:8268ac3dc19bc7f517197c",
+  measurementId: "G-M3EJJF58KK"
+};
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const realtimeDb = getDatabase(app);
+    const auth = getAuth();
+
+    // Function to fetch admin activities from Realtime Database
+    function fetchAdminActivitiesRealtime() {
+      const activitiesRef = ref(realtimeDb, 'adminAct');
+      onValue(activitiesRef, (snapshot) => {
+        const activities = snapshot.val();
+        // Clear previous data
+        const table = document.getElementById('activityTable');
+        table.innerHTML = ''; // Clear existing rows
+
+        // Iterate over activities and add to table
+        for (const entityType in activities) {
+          if (Object.hasOwnProperty.call(activities, entityType)) {
+            const entityActivities = activities[entityType];
+            for (const key in entityActivities) {
+              if (Object.hasOwnProperty.call(entityActivities, key)) {
+                const activity = entityActivities[key];
+                const row = table.insertRow();
+                row.insertCell(0).textContent = activity.adminName;
+                row.insertCell(1).textContent = activity.activityType;
+                row.insertCell(2).textContent = new Date(activity.timestamp).toLocaleString();
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Function to log admin activities
+    function logAdminActivity(activityType, entityType) {
+      const user = auth.currentUser;
+      if (user) {
+        const adminName = user.email; // Assuming adminName is the email of the admin
+        const timestamp = new Date().toISOString(); // Current timestamp
+
+        // Determine the database reference based on entityType
+        let activitiesRef;
+        if (entityType === 'Place') {
+          activitiesRef = ref(realtimeDb, `adminAct/placesSet/`);
+        } else if (entityType === 'Review') {
+          activitiesRef = ref(realtimeDb, `adminAct/reviews`);
+        } else {
+          console.error('Unsupported entity type.');
+          return;
+        }
+
+        // Add admin activity to the specified entity type in Realtime Database
+        const newActivityRef = push(activitiesRef);
+        newActivityRef.set({
+          adminName: adminName,
+          activityType: activityType,
+          timestamp: timestamp
+        }).then(() => {
+          console.log("Admin activity logged successfully.");
+        }).catch((error) => {
+          console.error("Error logging admin activity: ", error);
+        });
+      } else {
+        console.error("No admin user signed in.");
+      }
+    }
+
+    // Fetch admin activities on page load
+    window.onload = function() {
+      fetchAdminActivitiesRealtime();
+    };
+
+    // Example usage: Logging admin activity when a review is viewed
+    document.getElementById('viewReviewLink').addEventListener('click', () => {
+      logAdminActivity('View Review', 'Review');
+    });
+
+    // Example usage: Logging admin activity when a place is added
+    document.getElementById('addPlaceLink').addEventListener('click', () => {
+      logAdminActivity('Add Place', 'Place');
+    });
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>
