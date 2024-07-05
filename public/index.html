@@ -250,7 +250,7 @@
               <li><a href="#about">About</a></li>
               <li><a href="#help">Location</a></li>
               <li><a href="#reviews">Reviews</a></li>
-              <li><a href="login.html">Sign out</a></li>
+              <li><a href="admin/login.html">Sign In</a></li>
             </ul>
             <i class="fas fa-bars menu-bar"></i> <!-- Corrected class name -->
           </div>
@@ -289,28 +289,6 @@
     </div>
     <!-- About section -->
 
-    <!-- Services section -->
-    <div class="services" id="services">
-      <div class="container">
-        <div class="box-services">
-          <div class="box">
-            <i class="fas fa-coins"></i> <!-- Corrected class name -->
-            <h4>Harga Terjangkau</h4>
-            <p>Informasi tambahan tentang harga.</p> <!-- Add more details -->
-          </div>
-          <div class="box">
-            <i class="fas fa-certificate"></i> <!-- Corrected class name -->
-            <h4>Sudah Tersertifikasi</h4>
-          </div>
-          <div class="box">
-            <i class="fas fa-people-roof"></i> <!-- Corrected class name -->
-            <h4>Aman dan Ramah</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Services section -->
-
     <!-- Help section -->
     <div class="help" id="help">
       <div class="container">
@@ -318,23 +296,17 @@
           <div class="box">
             <img src="assets/img/RK_B.jpg" alt="Rumah Kucing Bintaro" />
             <h3>Rumah Kucing Bintaro</h3>
-            <button class="detail-btn" data-detail="detail1.html">
-              Detail
-            </button>
+            <button class="detail-btn" data-detail="detail1.html">Detail</button>
           </div>
           <div class="box">
             <img src="assets/img/CAT-2.jpeg" alt="Rumah Kucing .com" />
             <h3>Rumah Kucing .com</h3>
-            <button class="detail-btn" data-detail="detail2.html">
-              Detail
-            </button>
+            <button class="detail-btn" data-detail="detail2.html">Detail</button>
           </div>
           <div class="box">
             <img src="assets/img/CAT-3.jpeg" alt="Rumah Kucing Parung" />
             <h3>Rumah Kucing Parung</h3>
-            <button class="detail-btn" data-detail="detail3.html">
-              Detail
-            </button>
+            <button class="detail-btn" data-detail="detail3.html">Detail</button>
           </div>
         </div>
       </div>
@@ -467,6 +439,15 @@
 
   reviewsList.appendChild(reviewItem);
 });
+
+const detailButtons = document.querySelectorAll('.detail-btn');
+        detailButtons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            const href = button.getAttribute('data-detail');
+            window.location.href = href;
+          });
+        });
+
 
       // Auto logout timer
       let logoutTimer;

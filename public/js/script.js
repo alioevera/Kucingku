@@ -47,7 +47,7 @@ const daftarButton = document.querySelector(".daftar button");
 // Add event listener to handle button click
 daftarButton.addEventListener("click", () => {
   // Redirect to login.html when "Daftar" button is clicked
-  window.location.href = "login.html";
+  window.location.href = "admin/login.html";
 });
 
 // Add event listener to handle authentication state change

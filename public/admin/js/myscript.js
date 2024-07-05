@@ -27,26 +27,26 @@ const analytics = getAnalytics(app);
 // Initialize Firebase Authentication
 const auth = getAuth(app);
 
-// Sign up function
-document.getElementById("button_signup").addEventListener("click", (e) => {
-  e.preventDefault();
-  const email = document.getElementById("email_signup").value;
-  const password = document.getElementById("psw_signup").value;
+// // Sign up function
+// document.getElementById("button_signup").addEventListener("click", (e) => {
+//   e.preventDefault();
+//   const email = document.getElementById("email_signup").value;
+//   const password = document.getElementById("psw_signup").value;
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed up
-      const user = userCredential.user;
-      console.log("User signed up:", user);
-      alert("Sign up successful! Welcome, " + user.email);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error("Error signing up:", errorCode, errorMessage);
-      alert(`Sign up failed: ${errorMessage}`);
-    });
-});
+//   createUserWithEmailAndPassword(auth, email, password)
+//     .then((userCredential) => {
+//       // Signed up
+//       const user = userCredential.user;
+//       console.log("User signed up:", user);
+//       alert("Sign up successful! Welcome, " + user.email);
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       console.error("Error signing up:", errorCode, errorMessage);
+//       alert(`Sign up failed: ${errorMessage}`);
+//     });
+// });
 
 // Sign in function
 document.getElementById("button_signin").addEventListener("click", (e) => {
