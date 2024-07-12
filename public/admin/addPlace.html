@@ -211,7 +211,7 @@
                 plName: plName.value,
                 plAddress: plAddress.value,
                 plOwner: plOwner.value,
-                rating: rating.value,
+                rating: parseInt(rating.value),
                 plImage: imageURL
             }).then(() => {
                 alert("Data Added Successfully");
