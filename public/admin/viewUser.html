@@ -1,203 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link
-    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="css/style.css" />
-  <title>Kucingku</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Kucingku</title>
+  </head>
 
-<body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <a href="#" class="logo">
-      <img src="images/logo.png" alt="Logo" />
-    </a>
-    <ul class="side-menu">
-      <li class="active">
-        <a href="#"><i class="bx bx-analyse"></i><span>Place</span></a>
-        <ul class="submenu">
-          <li><a href="addPlace.html">Add Place</a></li>
-          <li><a href="viewPlace.html">View Place</a></li>
-          <li><a href="addCatNames.html">Add Cat</a></li>
-          <li><a href="viewCatNames.html">View Cat</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="viewReview.html"
-          ><i class="bx bx-message-square-dots"></i><span>Review</span></a
-        >
-      </li>
-      <li>
-        <a href="viewUser.html"><i class="bx bx-group"></i><span>Users</span></a>
-      </li>
-      <li>
-        <a href="#"><i class="bx bx-cog"></i><span>Settings</span></a>
-      </li>
-    </ul>
-    <ul class="side-menu">
-      <li>
-        <a href="login.html" class="logout" id="logoutBtn">
-          <i class="bx bx-log-out-circle"></i><span>Logout</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Content -->
-  <div class="content">
-    <!-- Navbar -->
-    <nav>
-      <i class="bx bx-menu"></i>
-      <form action="#">
-        <div class="form-input">
-          <input type="search" placeholder="Search..." />
-          <button class="search-btn" type="submit">
-            <i class="bx bx-search"></i>
-          </button>
-        </div>
-      </form>
-      <input type="checkbox" id="theme-toggle" hidden />
-      <label for="theme-toggle" class="theme-toggle"></label>
-      <a href="#" class="notif">
-        <i class="bx bx-bell"></i>
-        <span class="count">12</span>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" class="logo">
+        <img src="images/logo.png" alt="Logo" />
       </a>
-      <a href="#" class="profile">
-        <img src="images/logo.png" alt="Profile" />
-      </a>
-    </nav>
-
-    <!-- Main Content -->
-    <main>
-      <div class="header">
-        <div class="left">
-          <h1>Dashboard</h1>
-          <ul class="breadcrumbs">
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="#">Dashboard</a></li>
+      <ul class="side-menu">
+        <li class="active">
+          <a href="#"><i class="bx bx-analyse"></i><span>Place</span></a>
+          <ul class="submenu">
+            <li><a href="addPlace.html">Add Place</a></li>
+            <li><a href="viewPlace.html">View Place</a></li>
+            <li><a href="addCatNames.html">Add Cat</a></li>
+            <li><a href="viewCatNames.html">View Cat</a></li>
           </ul>
-        </div>
-        <div class="right">
-          <button>Button</button>
-        </div>
-      </div>
+        </li>
+        <li>
+          <a href="viewReview.html"
+            ><i class="bx bx-message-square-dots"></i><span>Review</span></a
+          >
+        </li>
+        <li>
+          <a href="viewUser.html"
+            ><i class="bx bx-group"></i><span>Users</span></a
+          >
+        </li>
+        <a href="viewReservations.html"
+          ><i class="bx bx-calendar"></i><span>Reservation</span></a
+        >
+      </ul>
+      <ul class="side-menu">
+        <li>
+          <a href="login.html" class="logout" id="logoutBtn">
+            <i class="bx bx-log-out-circle"></i><span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
-      <!-- Data Section -->
-      <div class="data">
-        <div class="content-data">
-          <div class="head">
-            <h3>User Data</h3>
-            <div class="icon">
-              <i class="bx bx-data"></i>
+    <!-- Content -->
+    <div class="content">
+      <!-- Navbar -->
+      <nav>
+        <i class="bx bx-menu"></i>
+        <form action="#">
+          <div class="form-input">
+            <input type="search" placeholder="Search..." />
+            <button class="search-btn" type="submit">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <input type="checkbox" id="theme-toggle" hidden />
+        <label for="theme-toggle" class="theme-toggle"></label>
+        <a href="#" class="notif">
+          <i class="bx bx-bell"></i>
+          <span class="count">12</span>
+        </a>
+        <a href="#" class="profile">
+          <img src="images/logo.png" alt="Profile" />
+        </a>
+      </nav>
+
+      <!-- Main Content -->
+      <main>
+        <div class="header">
+          <div class="left">
+            <h1>Dashboard</h1>
+            <ul class="breadcrumbs">
+              <li><a href="#" class="active">Home</a></li>
+              <li><a href="#">Dashboard</a></li>
+            </ul>
+          </div>
+          <div class="right">
+            <button>Button</button>
+          </div>
+        </div>
+
+        <!-- Data Section -->
+        <div class="data">
+          <div class="content-data">
+            <div class="head">
+              <h3>User Data</h3>
+              <div class="icon">
+                <i class="bx bx-data"></i>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>User ID</th>
+                    <th>Email</th>
+                    <th>Created At</th>
+                  </tr>
+                </thead>
+                <tbody id="userTableBody">
+                  <!-- Data rows will go here -->
+                </tbody>
+              </table>
             </div>
           </div>
-          <div class="table-container">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>User ID</th>
-                  <th>Email</th>
-                  <th>Created At</th>
-                </tr>
-              </thead>
-              <tbody id="userTableBody">
-                <!-- Data rows will go here -->
-              </tbody>
-            </table>
-          </div>
         </div>
-      </div>
-    </main>
-  </div>
+      </main>
+    </div>
 
-  // Firebase SDKs
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+    // Firebase SDKs
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
 
-<!-- Firebase Initialization and Database Operations -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-  import {
-    getDatabase,
-    ref,
-    onValue,
-    remove,
-    update,
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    <!-- Firebase Initialization and Database Operations -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        remove,
+        update,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
-    authDomain: "project-kucing.firebaseapp.com",
-    databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
-    projectId: "project-kucing",
-    storageBucket: "project-kucing.appspot.com",
-    messagingSenderId: "670406034488",
-    appId: "1:670406034488:web:e5e24491d859491abb12cd",
-    measurementId: "G-CTMSWG4E5W",
-  };
+      const firebaseConfig = {
+        apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+        authDomain: "project-kucing.firebaseapp.com",
+        databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
+        projectId: "project-kucing",
+        storageBucket: "project-kucing.appspot.com",
+        messagingSenderId: "670406034488",
+        appId: "1:670406034488:web:e5e24491d859491abb12cd",
+        measurementId: "G-CTMSWG4E5W",
+      };
 
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getDatabase();
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const db = getDatabase();
 
-  async function loadData() {
-    try {
-      const usersRef = ref(db, "users/");
-      onValue(usersRef, (snapshot) => {
-        const data = snapshot.val();
-        const tbody = document.getElementById("userTableBody");
-        tbody.innerHTML = "";
+      async function loadData() {
+        try {
+          const usersRef = ref(db, "users/");
+          onValue(usersRef, (snapshot) => {
+            const data = snapshot.val();
+            const tbody = document.getElementById("userTableBody");
+            tbody.innerHTML = "";
 
-        for (const key in data) {
-          if (Object.hasOwnProperty.call(data, key)) {
-            const user = data[key];
-            const createdAt = formatDate(user.timestamp); // Format timestamp to date
-            const row = document.createElement("tr");
+            for (const key in data) {
+              if (Object.hasOwnProperty.call(data, key)) {
+                const user = data[key];
+                const createdAt = formatDate(user.timestamp); // Format timestamp to date
+                const row = document.createElement("tr");
 
-            row.innerHTML = `
+                row.innerHTML = `
               <td>${key}</td>
               <td>${user.email}</td>
               <td>${createdAt}</td>
             `;
 
-            tbody.appendChild(row);
-          }
+                tbody.appendChild(row);
+              }
+            }
+          });
+        } catch (error) {
+          console.error("Error fetching users:", error);
         }
+      }
+
+      function formatDate(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleDateString(); // Adjust date format as needed
+      }
+
+      window.onload = loadData;
+
+      // Firebase Authentication logout
+      const logoutBtn = document.getElementById("logoutBtn");
+      logoutBtn.addEventListener("click", () => {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            // Sign-out successful, redirect to login page
+            window.location.href = "login.html";
+          })
+          .catch((error) => {
+            // An error happened
+            console.error("Error signing out: ", error);
+          });
       });
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  }
-
-  function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    return date.toLocaleDateString(); // Adjust date format as needed
-  }
-
-  window.onload = loadData;
-
-  // Firebase Authentication logout
-  const logoutBtn = document.getElementById("logoutBtn");
-  logoutBtn.addEventListener("click", () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        // Sign-out successful, redirect to login page
-        window.location.href = "login.html";
-      })
-      .catch((error) => {
-        // An error happened
-        console.error("Error signing out: ", error);
-      });
-  });
-</script>
-</body>
+    </script>
+  </body>
 </html>

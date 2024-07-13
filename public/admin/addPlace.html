@@ -1,113 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
     <title>Responsive Dashboard Design #2 | AsmrProg</title>
     <!-- Google Maps API Key (Replace YOUR_GOOGLE_API_KEY with your actual API key) -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <a href="#" class="logo">
-            <img src="images/logo.png" alt="Logo">
-        </a>
-        <ul class="side-menu">
-            <li class="active">
-                <a href="#"><i class='bx bx-analyse'></i><span>Place</span></a>
-                <ul class="submenu">
-                    <li><a href="addPlace.html">Add Place</a></li>
-                    <li><a href="viewPlace.html">View Place</a></li>
-                    <li><a href="addCatNames.html">Add Cat</a></li>
-                    <li><a href="viewCatNames.html">View Cat</a></li>
-                </ul>
-            </li>
-            <li><a href="viewReview.html"><i class='bx bx-message-square-dots'></i><span>Review</span></a></li>
-            <li><a href="viewUser.html"><i class='bx bx-group'></i><span>Users</span></a></li>
-            <li><a href="#"><i class='bx bx-cog'></i><span>Settings</span></a></li>
-        </ul>
-        <ul class="side-menu">
-            <li>
-                <a href="#" class="logout">
-                    <i class='bx bx-log-out-circle'></i><span>Logout</span>
-                </a>
-            </li>
-        </ul>
+      <a href="#" class="logo">
+        <img src="images/logo.png" alt="Logo" />
+      </a>
+      <ul class="side-menu">
+        <li class="active">
+          <a href="#"><i class="bx bx-analyse"></i><span>Place</span></a>
+          <ul class="submenu">
+            <li><a href="addPlace.html">Add Place</a></li>
+            <li><a href="viewPlace.html">View Place</a></li>
+            <li><a href="addCatNames.html">Add Cat</a></li>
+            <li><a href="viewCatNames.html">View Cat</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="viewReview.html"
+            ><i class="bx bx-message-square-dots"></i><span>Review</span></a
+          >
+        </li>
+        <li>
+          <a href="viewUser.html"
+            ><i class="bx bx-group"></i><span>Users</span></a
+          >
+        </li>
+        <li>
+          <a href="viewReservations.html"
+            ><i class="bx bx-calendar"></i><span>Reservation</span></a
+          >
+        </li>
+      </ul>
+      <ul class="side-menu">
+        <li>
+          <a href="#" class="logout">
+            <i class="bx bx-log-out-circle"></i><span>Logout</span>
+          </a>
+        </li>
+      </ul>
     </div>
 
     <!-- Content -->
     <div class="content">
-        <nav>
-            <i class='bx bx-menu'></i>
-            <!-- Search Form -->
-            <form action="#">
-                <div class="form-input">
-                    <input type="search" placeholder="Search...">
-                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
-                </div>
-            </form>
-            <!-- Theme Toggle -->
-            <input type="checkbox" id="theme-toggle" hidden>
-            <label for="theme-toggle" class="theme-toggle"></label>
-            <!-- Notifications -->
-            <a href="#" class="notif">
-                <i class='bx bx-bell'></i>
-                <span class="count">12</span>
-            </a>
-            <!-- Profile -->
-            <a href="#" class="profile">
-                <img src="images/logo.png" alt="Profile">
-            </a>
-        </nav>
+      <nav>
+        <i class="bx bx-menu"></i>
+        <!-- Search Form -->
+        <form action="#">
+          <div class="form-input">
+            <input type="search" placeholder="Search..." />
+            <button class="search-btn" type="submit">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <!-- Theme Toggle -->
+        <input type="checkbox" id="theme-toggle" hidden />
+        <label for="theme-toggle" class="theme-toggle"></label>
+        <!-- Notifications -->
+        <a href="#" class="notif">
+          <i class="bx bx-bell"></i>
+          <span class="count">12</span>
+        </a>
+        <!-- Profile -->
+        <a href="#" class="profile">
+          <img src="images/logo.png" alt="Profile" />
+        </a>
+      </nav>
 
-        <main>
-            <!-- Main Header -->
-            <div class="header">
-                <div class="left">
-                    <h1>Dashboard</h1>
-                    <!-- Breadcrumbs -->
-                    <ul class="breadcrumbs">
-                        <li><a href="#" class="active">Home</a></li>
-                        <li><a href="#">Dashboard</a></li>
-                    </ul>
-                </div>
-                <div class="right">
-                    <button>Button</button>
-                </div>
-            </div>
-            <!-- Form Section -->
-            <div class="form-section">
-                <div class="form-container">
-                    <h3>Add Place</h3>
-                    <form id="createForm">
-                        <label for="idPlace">Place Code:</label>
-                        <input type="text" id="idPlace" name="idPlace" required><br><br>
-                        <!-- Image Upload -->
-                        <label for="image">Image:</label>
-                        <label id="extlab"></label><br><br>
-                        <img id="myimg"><br><br>
-                        <label id="upprogress"></label><br><br>
-                        <!-- Place Details -->
-                        <label for="plName">Place Name:</label>
-                        <input type="text" id="plName" name="plName" required><br><br>
-                        <label for="plAddress">Address:</label>
-                        <input type="text" id="plAddress" name="plAddress" required><br><br>
-                        <label for="plOwner">Place Owner:</label>
-                        <input type="text" id="plOwner" name="plOwner" required><br><br>
-                        <label for="rating">Rating:</label>
-                        <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
-                        <!-- Buttons -->
-                        <button id="addBtn" type="button">Add</button>
-                        <button id="selbtn" type="button">Select Image</button>
-                    </form>
-                </div>
-            </div>
-        </main>
+      <main>
+        <!-- Main Header -->
+        <div class="header">
+          <div class="left">
+            <h1>Dashboard</h1>
+            <!-- Breadcrumbs -->
+            <ul class="breadcrumbs">
+              <li><a href="#" class="active">Home</a></li>
+              <li><a href="#">Dashboard</a></li>
+            </ul>
+          </div>
+          <div class="right">
+            <button>Button</button>
+          </div>
+        </div>
+        <!-- Form Section -->
+        <div class="form-section">
+          <div class="form-container">
+            <h3>Add Place</h3>
+            <form id="createForm">
+              <label for="idPlace">Place Code:</label>
+              <input
+                type="text"
+                id="idPlace"
+                name="idPlace"
+                required
+              /><br /><br />
+              <!-- Image Upload -->
+              <label for="image">Image:</label>
+              <label id="extlab"></label><br /><br />
+              <img id="myimg" /><br /><br />
+              <label id="upprogress"></label><br /><br />
+              <!-- Place Details -->
+              <label for="plName">Place Name:</label>
+              <input
+                type="text"
+                id="plName"
+                name="plName"
+                required
+              /><br /><br />
+              <label for="plAddress">Address:</label>
+              <input
+                type="text"
+                id="plAddress"
+                name="plAddress"
+                required
+              /><br /><br />
+              <label for="plOwner">Place Owner:</label>
+              <input
+                type="text"
+                id="plOwner"
+                name="plOwner"
+                required
+              /><br /><br />
+              <label for="rating">Rating:</label>
+              <input
+                type="number"
+                id="rating"
+                name="rating"
+                min="1"
+                max="5"
+                required
+              /><br /><br />
+              <!-- Buttons -->
+              <button id="addBtn" type="button">Add</button>
+              <button id="selbtn" type="button">Select Image</button>
+            </form>
+          </div>
+        </div>
+      </main>
     </div>
 
     <!-- Firebase SDKs -->
@@ -118,162 +161,187 @@
 
     <!-- Firebase Initialization and Database Operations -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-        import { getStorage, ref as Sref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+      import {
+        getDatabase,
+        ref,
+        set,
+        get,
+        child,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+      import {
+        getStorage,
+        ref as Sref,
+        uploadBytesResumable,
+        getDownloadURL,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-        // Firebase configuration
-        const firebaseConfig = {
-    apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
-    authDomain: "project-kucing.firebaseapp.com",
-    databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
-    projectId: "project-kucing",
-    storageBucket: "project-kucing.appspot.com",
-    messagingSenderId: "670406034488",
-    appId: "1:670406034488:web:e5e24491d859491abb12cd",
-    measurementId: "G-CTMSWG4E5W"
-  };
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+        authDomain: "project-kucing.firebaseapp.com",
+        databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
+        projectId: "project-kucing",
+        storageBucket: "project-kucing.appspot.com",
+        messagingSenderId: "670406034488",
+        appId: "1:670406034488:web:e5e24491d859491abb12cd",
+        measurementId: "G-CTMSWG4E5W",
+      };
 
-        // Initialize Firebase app
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const db = getDatabase();
-        const storage = getStorage(app);
+      // Initialize Firebase app
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const db = getDatabase();
+      const storage = getStorage(app);
 
-        // DOM elements
-        const idPlace = document.getElementById('idPlace');
-        const plName = document.getElementById('plName');
-        const plAddress = document.getElementById('plAddress');
-        const plOwner = document.getElementById('plOwner');
-        const rating = document.getElementById('rating');
+      // DOM elements
+      const idPlace = document.getElementById("idPlace");
+      const plName = document.getElementById("plName");
+      const plAddress = document.getElementById("plAddress");
+      const plOwner = document.getElementById("plOwner");
+      const rating = document.getElementById("rating");
 
-        const addBtn = document.getElementById('addBtn');
-        const selBtn = document.getElementById('selbtn');
+      const addBtn = document.getElementById("addBtn");
+      const selBtn = document.getElementById("selbtn");
 
-        // File handling
-        let files = [];
-        const reader = new FileReader();
+      // File handling
+      let files = [];
+      const reader = new FileReader();
 
-        // Function to get file extension
-        function GetFileExt(file) {
-            const temp = file.name.split('.');
-            const ext = temp[temp.length - 1];
-            return '.' + ext;
-        }
+      // Function to get file extension
+      function GetFileExt(file) {
+        const temp = file.name.split(".");
+        const ext = temp[temp.length - 1];
+        return "." + ext;
+      }
 
-        // Function to get file name without extension
-        function GetFileName(file) {
-            const temp = file.name.split('.');
-            const fname = temp.slice(0, -1).join('.');
-            return fname;
-        }
+      // Function to get file name without extension
+      function GetFileName(file) {
+        const temp = file.name.split(".");
+        const fname = temp.slice(0, -1).join(".");
+        return fname;
+      }
 
-        // Function to upload image file
-        async function UploadProcess() {
-            const ImgToUpload = files[0];
-            const ImgName = GetFileName(files[0]) + GetFileExt(files[0]);
+      // Function to upload image file
+      async function UploadProcess() {
+        const ImgToUpload = files[0];
+        const ImgName = GetFileName(files[0]) + GetFileExt(files[0]);
 
-            const metaData = {
-                contentType: ImgToUpload.type
-            }
+        const metaData = {
+          contentType: ImgToUpload.type,
+        };
 
-            const storageRef = Sref(storage, "Images/" + ImgName);
-            const UploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaData);
+        const storageRef = Sref(storage, "Images/" + ImgName);
+        const UploadTask = uploadBytesResumable(
+          storageRef,
+          ImgToUpload,
+          metaData
+        );
 
-            UploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    document.getElementById('upprogress').innerHTML = "Upload " + progress.toFixed(2) + "%";
-                },
-                (error) => {
-                    alert("Error: Image not uploaded!");
-                    console.error(error);
-                },
-                () => {
-                    getDownloadURL(UploadTask.snapshot.ref)
-                        .then((downloadURL) => {
-                            console.log(downloadURL);
-                            // Save place data including image URL to database
-                            addData(downloadURL);
-                        })
-                        .catch((error) => {
-                            alert("Error: Failed to retrieve download URL!");
-                            console.error(error);
-                        });
-                }
-            );
-        }
-
-        // Function to add place data to Firebase Realtime Database
-        function addData(imageURL) {
-            set(ref(db, 'PlacesSet/' + idPlace.value), {
-                plName: plName.value,
-                plAddress: plAddress.value,
-                plOwner: plOwner.value,
-                rating: parseInt(rating.value),
-                plImage: imageURL
-            }).then(() => {
-                alert("Data Added Successfully");
-                window.location.href = 'viewPlace.html';
-            }).catch((error) => {
-                alert("Failed to add data");
+        UploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            document.getElementById("upprogress").innerHTML =
+              "Upload " + progress.toFixed(2) + "%";
+          },
+          (error) => {
+            alert("Error: Image not uploaded!");
+            console.error(error);
+          },
+          () => {
+            getDownloadURL(UploadTask.snapshot.ref)
+              .then((downloadURL) => {
+                console.log(downloadURL);
+                // Save place data including image URL to database
+                addData(downloadURL);
+              })
+              .catch((error) => {
+                alert("Error: Failed to retrieve download URL!");
                 console.error(error);
-            });
-        }
+              });
+          }
+        );
+      }
 
-        function retData() {
-            const dbRef = ref(db);
-            get(child(dbRef, 'PlacesSet/' + idPlace.value)).then((snapshot) => {
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            plName.value = data.plName;
-            plAddress.value = data.plAddress;
-            plOwner.value = data.plOwner;
-            rating.value = data.rating;
-            document.getElementById('myimg').src = data.plImage; // Update image src if needed
-        } else {
-            alert("Place does not exist");
-        }
-    }).catch((error) => {
-        alert("Failed to fetch data");
-        console.error(error);
-    });
-}
+      // Function to add place data to Firebase Realtime Database
+      function addData(imageURL) {
+        set(ref(db, "PlacesSet/" + idPlace.value), {
+          plName: plName.value,
+          plAddress: plAddress.value,
+          plOwner: plOwner.value,
+          rating: parseInt(rating.value),
+          plImage: imageURL,
+        })
+          .then(() => {
+            alert("Data Added Successfully");
+            window.location.href = "viewPlace.html";
+          })
+          .catch((error) => {
+            alert("Failed to add data");
+            console.error(error);
+          });
+      }
 
-        // Function to handle file selection
-        const input = document.createElement('input');
-        input.type = 'file';
-
-        input.onchange = e => {
-            files = e.target.files;
-            const extension = GetFileExt(files[0]);
-            document.getElementById('extlab').innerHTML = extension;
-            reader.readAsDataURL(files[0]);
-            reader.onload = function () {
-                document.getElementById('myimg').src = reader.result;
-                UploadProcess();
+      function retData() {
+        const dbRef = ref(db);
+        get(child(dbRef, "PlacesSet/" + idPlace.value))
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              plName.value = data.plName;
+              plAddress.value = data.plAddress;
+              plOwner.value = data.plOwner;
+              rating.value = data.rating;
+              document.getElementById("myimg").src = data.plImage; // Update image src if needed
+            } else {
+              alert("Place does not exist");
             }
-        }
+          })
+          .catch((error) => {
+            alert("Failed to fetch data");
+            console.error(error);
+          });
+      }
 
-        // Trigger file input dialog on button click
-        selBtn.onclick = function () {
-            input.click();
-        }
+      // Function to handle file selection
+      const input = document.createElement("input");
+      input.type = "file";
 
-        const logoutBtn = document.getElementById('logoutBtn');
+      input.onchange = (e) => {
+        files = e.target.files;
+        const extension = GetFileExt(files[0]);
+        document.getElementById("extlab").innerHTML = extension;
+        reader.readAsDataURL(files[0]);
+        reader.onload = function () {
+          document.getElementById("myimg").src = reader.result;
+          UploadProcess();
+        };
+      };
 
-    logoutBtn.addEventListener('click', (e) => {
+      // Trigger file input dialog on button click
+      selBtn.onclick = function () {
+        input.click();
+      };
+
+      const logoutBtn = document.getElementById("logoutBtn");
+
+      logoutBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        firebase.auth().signOut().then(() => {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
             // Sign-out successful.
-            window.location.href = 'login.html'; // Redirect to login page
-        }).catch((error) => {
+            window.location.href = "login.html"; // Redirect to login page
+          })
+          .catch((error) => {
             // An error happened.
             console.error(error);
-        });
-    });
+          });
+      });
     </script>
-</body>
-
+  </body>
 </html>

@@ -250,9 +250,10 @@
               <li><a href="#about">About</a></li>
               <li><a href="#help">Location</a></li>
               <li><a href="#reviews">Reviews</a></li>
-              <li><a href="admin/login.html">Sign In</a></li>
+              <li><a href="/admin/login.html"> Only Admin</a></li>
             </ul>
-            <i class="fas fa-bars menu-bar"></i> <!-- Corrected class name -->
+            <i class="fas fa-bars menu-bar"></i>
+            <!-- Corrected class name -->
           </div>
         </div>
       </div>
@@ -261,7 +262,8 @@
         <div class="container">
           <div class="box-hero">
             <div class="box">
-              <h1>Ingin Bermain Bersama Kucing?</h1> <!-- Fixed heading -->
+              <h1>Ingin Bermain Bersama Kucing?</h1>
+              <!-- Fixed heading -->
               <a href="#about"><button>Selengkapnya</button></a>
             </div>
             <div class="box">
@@ -296,17 +298,23 @@
           <div class="box">
             <img src="assets/img/RK_B.jpg" alt="Rumah Kucing Bintaro" />
             <h3>Rumah Kucing Bintaro</h3>
-            <button class="detail-btn" data-detail="detail1.html">Detail</button>
+            <button class="detail-btn" data-detail="detail1.html">
+              Detail
+            </button>
           </div>
           <div class="box">
             <img src="assets/img/CAT-2.jpeg" alt="Rumah Kucing .com" />
             <h3>Rumah Kucing .com</h3>
-            <button class="detail-btn" data-detail="detail2.html">Detail</button>
+            <button class="detail-btn" data-detail="detail2.html">
+              Detail
+            </button>
           </div>
           <div class="box">
             <img src="assets/img/CAT-3.jpeg" alt="Rumah Kucing Parung" />
             <h3>Rumah Kucing Parung</h3>
-            <button class="detail-btn" data-detail="detail3.html">Detail</button>
+            <button class="detail-btn" data-detail="detail3.html">
+              Detail
+            </button>
           </div>
         </div>
       </div>
@@ -362,7 +370,6 @@
             <a href="#about">About</a>
             <a href="#help">Location</a>
             <a href="#reviews">Reviews</a>
-            <a href="#daftar">Daftar</a>
           </div>
           <div class="box">
             <p>&copy; Copyright by <span>Group 11</span></p>
@@ -381,73 +388,76 @@
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+      import {
+        getDatabase,
+        ref,
+        push,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
       const firebaseConfig = {
-    apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
-    authDomain: "project-kucing.firebaseapp.com",
-    databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
-    projectId: "project-kucing",
-    storageBucket: "project-kucing.appspot.com",
-    messagingSenderId: "670406034488",
-    appId: "1:670406034488:web:e5e24491d859491abb12cd",
-    measurementId: "G-CTMSWG4E5W"
-  };
+        apiKey: "AIzaSyA2EHrBbp_y3J_DXFnizJTnhpqnI-kWOFY",
+        authDomain: "project-kucing.firebaseapp.com",
+        databaseURL: "https://project-kucing-default-rtdb.firebaseio.com",
+        projectId: "project-kucing",
+        storageBucket: "project-kucing.appspot.com",
+        messagingSenderId: "670406034488",
+        appId: "1:670406034488:web:e5e24491d859491abb12cd",
+        measurementId: "G-CTMSWG4E5W",
+      };
 
       initializeApp(firebaseConfig);
 
       const db = getDatabase();
-      const reviewsRef = ref(db, 'reviews');
+      const reviewsRef = ref(db, "reviews");
       const reviewForm = document.getElementById("review-form");
       const reviewsList = document.getElementById("reviews-list");
 
       reviewForm.addEventListener("submit", function (e) {
-  e.preventDefault();
+        e.preventDefault();
 
-  const usName = document.getElementById("usName").value;
-  const plName = document.getElementById("plName").value;
-  const usReview = document.getElementById("usReview").value;
-  const usRating = parseInt(document.getElementById("usRating").value); // Convert to integerf
+        const usName = document.getElementById("usName").value;
+        const plName = document.getElementById("plName").value;
+        const usReview = document.getElementById("usReview").value;
+        const usRating = parseInt(document.getElementById("usRating").value); // Convert to integerf
 
-  // Save review to Firebase Realtime Database
-  push(reviewsRef, {
-    usName: usName,
-    plName: plName,
-    usReview: usReview,
-    usRating: usRating
-  });
+        // Save review to Firebase Realtime Database
+        push(reviewsRef, {
+          usName: usName,
+          plName: plName,
+          usReview: usReview,
+          usRating: usRating,
+        });
 
-  // Display review in the UI with star ratings
-  const reviewItem = document.createElement("div");
-  reviewItem.classList.add("review-item");
+        // Display review in the UI with star ratings
+        const reviewItem = document.createElement("div");
+        reviewItem.classList.add("review-item");
 
-  // Generate star icons based on usRating
-  let starsHtml = "";
-  for (let i = 1; i <= 5; i++) {
-    if (i <= usRating) {
-      starsHtml += '<i class="fas fa-star"></i>'; // Full star
-    } else {
-      starsHtml += '<i class="far fa-star"></i>'; // Empty star
-    }
-  }
+        // Generate star icons based on usRating
+        let starsHtml = "";
+        for (let i = 1; i <= 5; i++) {
+          if (i <= usRating) {
+            starsHtml += '<i class="fas fa-star"></i>'; // Full star
+          } else {
+            starsHtml += '<i class="far fa-star"></i>'; // Empty star
+          }
+        }
 
-  reviewItem.innerHTML = `
+        reviewItem.innerHTML = `
     <strong>${usName}</strong> reviewed <strong>${plName}</strong>:
     <div class="rating-stars">${starsHtml}</div>
     <p>${usReview}</p>
   `;
 
-  reviewsList.appendChild(reviewItem);
-});
+        reviewsList.appendChild(reviewItem);
+      });
 
-const detailButtons = document.querySelectorAll('.detail-btn');
-        detailButtons.forEach(function (button) {
-          button.addEventListener('click', function () {
-            const href = button.getAttribute('data-detail');
-            window.location.href = href;
-          });
+      const detailButtons = document.querySelectorAll(".detail-btn");
+      detailButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          const href = button.getAttribute("data-detail");
+          window.location.href = href;
         });
-
+      });
 
       // Auto logout timer
       let logoutTimer;
